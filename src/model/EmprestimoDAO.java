@@ -47,5 +47,23 @@ public class EmprestimoDAO {
         }
     }
     
+    public boolean remove(int id){
+        final String sql = "DELETE FROM emprestimo where id=?";
+        if (this.conn == null){
+            JOptionPane.showMessageDialog(null, "erro", "erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }      
+        try {
+            PreparedStatement stmt = this.conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "erro", "erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+    }
+    
     
 }
