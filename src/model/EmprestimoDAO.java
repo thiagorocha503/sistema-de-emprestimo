@@ -65,5 +65,28 @@ public class EmprestimoDAO {
         
     }
     
+    public boolean update(Emprestimo emprestimo){
+        final String sql = "UPDATE emprestimo  SET item_nome=?, pessoa_nome=?, pessoa_contato=?, dtEmprestimo=?, dtDevolucao=?, dtDevolvido=? WHERE id=?";
+        if (this.conn == null){
+            JOptionPane.showMessageDialog(null, "erro", "erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        try {
+            PreparedStatement stmt = this.conn.prepareStatement(sql);
+            stmt.setString(1, emprestimo.getItem());
+            stmt.setString(2, emprestimo.getAmigoNome());
+            stmt.setString(3, emprestimo.getAmigoContato());
+            stmt.setString(4, emprestimo.getDataEmprestimo());
+            stmt.setString(5, emprestimo.getDataDevolucao());
+            stmt.setString(6, emprestimo.getDataDevolvido());
+            stmt.setInt(7, emprestimo.getId());
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
     
 }
