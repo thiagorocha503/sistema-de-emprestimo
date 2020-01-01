@@ -8,7 +8,9 @@ package model.dao;
 import connection.ConnectionFatory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -24,6 +26,37 @@ public class EmprestimoDAO {
 
     public EmprestimoDAO() {
         this.conn = ConnectionFatory.getConnection();
+    }
+    
+    public ArrayList<Emprestimo> findAll(){
+        ArrayList<Emprestimo> emprestimos = new ArrayList<>();
+        final String sql = "SELECT * FROM emprestimo";
+        if (this.conn == null){
+            JOptionPane.showMessageDialog(null, "erro", "erro", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }       
+        try {
+            PreparedStatement stmt;
+            stmt = this.conn.prepareStatement(sql);
+            ResultSet rows = stmt.executeQuery();
+            while(rows.next()) {
+                Emprestimo emprestimo = new Emprestimo();
+                emprestimo.setId(rows.getInt("id"));
+                emprestimo.setItem(rows.getString("item_nome"));
+                emprestimo.setAmigoNome(rows.getString("pessoa_nome"));
+                emprestimo.setAmigoContato(rows.getString("pessoa_contato"));
+                emprestimo.setDataEmprestimo(rows.getString("dtEmprestimo"));
+                emprestimo.setDataDevolucao(rows.getString("dtDevolucao"));
+                emprestimo.setDataDevolvido(rows.getString("dtDevolvido"));
+                emprestimos.add(emprestimo);               
+            }
+            return emprestimos;
+        } catch (SQLException ex) {
+            Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return emprestimos;
+        }
+       
+        
     }
     
     public boolean insert(Emprestimo emprestimo) {
