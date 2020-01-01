@@ -5,18 +5,33 @@
  */
 package view;
 
+import javax.swing.JOptionPane;
+import model.Emprestimo;
+import model.EmprestimoTableModel;
+
 /**
  *
  * @author thiago
  */
-public class DialogEmprestimo extends javax.swing.JDialog {
+public class DialogEmprestimoAlterar extends javax.swing.JDialog {
+
+    private EmprestimoTableModel emprestimoTableModel;
+    private int row;
 
     /**
-     * Creates new form DialogEmprestimo
+     * Creates new form DialogEmprestimoAlterar
      */
-    public DialogEmprestimo(java.awt.Frame parent, boolean modal) {
+    public DialogEmprestimoAlterar(java.awt.Frame parent, boolean modal,  EmprestimoTableModel emprestimoTableModel, int row) {
         super(parent, modal);
+        this.row = row;
+        this.emprestimoTableModel = emprestimoTableModel;
         initComponents();
+        
+        this.txtItem.setText(this.emprestimoTableModel.getValueAt(row, 0).toString());
+        this.txtNome.setText(this.emprestimoTableModel.getValueAt(row, 1).toString());
+        this.txtContato.setText(this.emprestimoTableModel.getValueAt(row, 2).toString());
+        this.txtDtEmprestimo.setText(this.emprestimoTableModel.getValueAt(row, 3).toString());
+        this.txtDtDevolucao.setText(this.emprestimoTableModel.getValueAt(row, 4).toString());
     }
 
     /**
@@ -29,28 +44,29 @@ public class DialogEmprestimo extends javax.swing.JDialog {
     private void initComponents() {
 
         panelContainer = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        panelAmigo = new javax.swing.JPanel();
+        lblNome = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        lblContato = new javax.swing.JLabel();
         txtContato = new javax.swing.JFormattedTextField();
-        jPanel1 = new javax.swing.JPanel();
+        panelItem = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtItem = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtDtDevolucao = new javax.swing.JFormattedTextField();
         txtDtEmprestimo = new javax.swing.JFormattedTextField();
-        jButton1 = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Emprestimo de item");
+        setTitle("Emprestimo alteração");
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Amigo"));
+        panelAmigo.setBorder(javax.swing.BorderFactory.createTitledBorder("Amigo"));
 
-        jLabel1.setText("Nome");
+        lblNome.setText("Nome");
 
-        jLabel2.setText("Contato");
+        lblContato.setText("Contato");
 
         try {
             txtContato.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
@@ -58,36 +74,38 @@ public class DialogEmprestimo extends javax.swing.JDialog {
             ex.printStackTrace();
         }
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelAmigoLayout = new javax.swing.GroupLayout(panelAmigo);
+        panelAmigo.setLayout(panelAmigoLayout);
+        panelAmigoLayout.setHorizontalGroup(
+            panelAmigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAmigoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
+                .addGroup(panelAmigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNome)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtContato, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(panelAmigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelAmigoLayout.createSequentialGroup()
+                        .addComponent(lblContato)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(txtContato, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
+                .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        panelAmigoLayout.setVerticalGroup(
+            panelAmigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAmigoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                .addGroup(panelAmigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNome)
+                    .addComponent(lblContato))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelAmigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtContato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Emprestimo"));
+        panelItem.setBorder(javax.swing.BorderFactory.createTitledBorder("Emprestimo"));
 
         jLabel3.setText("Item");
 
@@ -107,47 +125,54 @@ public class DialogEmprestimo extends javax.swing.JDialog {
             ex.printStackTrace();
         }
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelItemLayout = new javax.swing.GroupLayout(panelItem);
+        panelItem.setLayout(panelItemLayout);
+        panelItemLayout.setHorizontalGroup(
+            panelItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelItemLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtItem)
                     .addComponent(jLabel3)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelItemLayout.createSequentialGroup()
+                        .addGroup(panelItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtDtEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(txtDtDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panelItemLayout.setVerticalGroup(
+            panelItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelItemLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panelItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtDtEmprestimo)
                     .addComponent(txtDtDevolucao))
                 .addContainerGap())
         );
 
-        jButton1.setText("Emprestar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAlterar.setText("Salvar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAlterarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -158,23 +183,27 @@ public class DialogEmprestimo extends javax.swing.JDialog {
             .addGroup(panelContainerLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelAmigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContainerLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                        .addComponent(btnCancelar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAlterar)))
                 .addContainerGap())
         );
         panelContainerLayout.setVerticalGroup(
             panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelContainerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelAmigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGroup(panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAlterar)
+                    .addComponent(btnCancelar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -192,10 +221,38 @@ public class DialogEmprestimo extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
-        this.cleanField();
-    }//GEN-LAST:event_jButton1ActionPerformed
+        String item = this.txtItem.getText();
+        String nome = this.txtNome.getText();
+        String contato = this.txtContato.getText();
+        String dataEmprestimo = this.txtDtEmprestimo.getText();
+        String dataDevolucao = this.txtDtDevolucao.getText();
+        if (!this.camposPreenchidos(nome, contato, item, dataEmprestimo, dataDevolucao)){
+            JOptionPane.showMessageDialog(null,"Preencha todos os campos!");
+            return;
+        }
+        this.emprestimoTableModel.setValueAt(item, row, 0);
+        this.emprestimoTableModel.setValueAt(nome, row, 1);
+        this.emprestimoTableModel.setValueAt(contato, row, 2);
+        this.emprestimoTableModel.setValueAt(dataEmprestimo, row, 3);
+        this.emprestimoTableModel.setValueAt(dataDevolucao, row,4);       
+        this.dispose();
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    
+    public boolean camposPreenchidos(String nome, String contato, String item, String dataEmprestimo, String dataDevolução){
+        //System.err.println("> "+nome+", "+contato+", "+item+", "+dataEmprestimo+", "+dataDevolução);
+        boolean[] campos = {nome.equals(""), contato.equals("(  )     -    "), item.equals(""),
+                            dataEmprestimo.equals("  /  /    "),dataDevolução.equals("  /  /    ")
+        };
+        for( boolean vazio: campos) {
+            if(vazio){
+                return false;
+            }
+        }
+        return true;
+    }
     
     public void cleanField(){
         this.txtNome.setText("");
@@ -205,6 +262,12 @@ public class DialogEmprestimo extends javax.swing.JDialog {
         this.txtDtDevolucao.setText("");
         
     }
+    
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -222,20 +285,20 @@ public class DialogEmprestimo extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DialogEmprestimo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogEmprestimoAlterar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DialogEmprestimo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogEmprestimoAlterar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DialogEmprestimo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogEmprestimoAlterar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DialogEmprestimo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogEmprestimoAlterar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DialogEmprestimo dialog = new DialogEmprestimo(new javax.swing.JFrame(), true);
+                DialogEmprestimoAlterar dialog = new DialogEmprestimoAlterar(new javax.swing.JFrame(), true, new EmprestimoTableModel(),-1);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -248,15 +311,16 @@ public class DialogEmprestimo extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblContato;
+    private javax.swing.JLabel lblNome;
+    private javax.swing.JPanel panelAmigo;
     private javax.swing.JPanel panelContainer;
+    private javax.swing.JPanel panelItem;
     private javax.swing.JFormattedTextField txtContato;
     private javax.swing.JFormattedTextField txtDtDevolucao;
     private javax.swing.JFormattedTextField txtDtEmprestimo;

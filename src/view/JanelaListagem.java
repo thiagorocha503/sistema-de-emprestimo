@@ -7,6 +7,9 @@ package view;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import model.EmprestimoTableModel;
+import javax.swing.table.AbstractTableModel;
 
 /**
  *
@@ -17,8 +20,16 @@ public class JanelaListagem extends javax.swing.JFrame {
     /**
      * Creates new form JanelaListagem
      */
+    
+    private EmprestimoTableModel emprestimoTabelModel = new EmprestimoTableModel();
+    
     public JanelaListagem() {
         initComponents();
+        this.tbEmprestimos.setModel(this.emprestimoTabelModel);
+    }
+
+    public JTable getTbEmprestimos() {
+        return tbEmprestimos;
     }
 
     /**
@@ -30,43 +41,45 @@ public class JanelaListagem extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        scrollPanelFrame = new javax.swing.JScrollPane();
+        panelContainer = new javax.swing.JPanel();
+        panelBusca = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        scrollPaneTable = new javax.swing.JScrollPane();
         tbEmprestimos = new javax.swing.JTable();
         btnEmprestar = new javax.swing.JButton();
         btnDevolver = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnRemover = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de emprestimos");
-        setMinimumSize(new java.awt.Dimension(648, 300));
+        setMinimumSize(new java.awt.Dimension(700, 350));
         setName("frmPrincipal"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(648, 340));
-        setSize(new java.awt.Dimension(648, 300));
+        setPreferredSize(new java.awt.Dimension(700, 350));
+        setSize(new java.awt.Dimension(700, 350));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        panelBusca.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jButton1.setText("Buscar");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelBuscaLayout = new javax.swing.GroupLayout(panelBusca);
+        panelBusca.setLayout(panelBuscaLayout);
+        panelBuscaLayout.setHorizontalGroup(
+            panelBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBuscaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTextField1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
                 .addGap(19, 19, 19))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        panelBuscaLayout.setVerticalGroup(
+            panelBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBuscaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -91,9 +104,9 @@ public class JanelaListagem extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(tbEmprestimos);
+        scrollPaneTable.setViewportView(tbEmprestimos);
 
-        btnEmprestar.setText("Emprestar");
+        btnEmprestar.setText("Novo emprestimo");
         btnEmprestar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEmprestarActionPerformed(evt);
@@ -107,53 +120,74 @@ public class JanelaListagem extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+
+        btnRemover.setText("Remover");
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelContainerLayout = new javax.swing.GroupLayout(panelContainer);
+        panelContainer.setLayout(panelContainerLayout);
+        panelContainerLayout.setHorizontalGroup(
+            panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelContainerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
+                .addGroup(panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelContainerLayout.createSequentialGroup()
+                        .addComponent(scrollPaneTable, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
                         .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContainerLayout.createSequentialGroup()
+                        .addGroup(panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(panelContainerLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnEmprestar))
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(panelBusca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(16, 16, 16))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContainerLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnRemover)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEditar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnDevolver)
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panelContainerLayout.setVerticalGroup(
+            panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelContainerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnEmprestar)
                 .addGap(35, 35, 35)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+                .addComponent(scrollPaneTable, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnDevolver)
+                .addGroup(panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDevolver)
+                    .addComponent(btnEditar)
+                    .addComponent(btnRemover))
                 .addGap(77, 77, 77))
         );
 
-        jScrollPane1.setViewportView(jPanel1);
+        scrollPanelFrame.setViewportView(panelContainer);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)
+            .addComponent(scrollPanelFrame, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(scrollPanelFrame, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -162,20 +196,44 @@ public class JanelaListagem extends javax.swing.JFrame {
 
     private void btnEmprestarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmprestarActionPerformed
         // TODO add your handling code here:
-        JDialog janelaEmprestimo = new DialogEmprestimo(this, true);
+        JDialog janelaEmprestimo = new DialogEmprestimoCadastro(this, true,this.emprestimoTabelModel);
         janelaEmprestimo.setVisible(true);
     }//GEN-LAST:event_btnEmprestarActionPerformed
 
     private void btnDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverActionPerformed
         // TODO add your handling code here:
         if (this.tbEmprestimos.getSelectedRow() != -1){
-            JDialog dialogEmprestimo = new DialogDevolucao(this, true);
+            JDialog dialogEmprestimo = new DialogDevolucao(this, true, this.emprestimoTabelModel, this.tbEmprestimos.getSelectedRow());
             dialogEmprestimo.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um emprestimos");
         }
         
     }//GEN-LAST:event_btnDevolverActionPerformed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        // TODO add your handling code here:
+        if(this.tbEmprestimos.getSelectedRow() != -1){
+            int resposta = JOptionPane.showConfirmDialog(null, "Tem certeza de deseja remover item selecionado?","Remoção",JOptionPane.YES_NO_OPTION);
+            System.out.println(resposta);
+            if (resposta==0){
+               this.emprestimoTabelModel.removeEmprestimo(this.tbEmprestimos.getSelectedRow());
+               JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null,"Escolha um emprestimo");
+        }
+    }//GEN-LAST:event_btnRemoverActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+        if (this.tbEmprestimos.getSelectedRow() != -1){
+            DialogEmprestimoAlterar  emprestimoAlterar = new DialogEmprestimoAlterar(this, true, emprestimoTabelModel, this.tbEmprestimos.getSelectedRow());
+            emprestimoAlterar.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null,"Selecione um emprestimo");
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,13 +272,15 @@ public class JanelaListagem extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDevolver;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEmprestar;
+    private javax.swing.JButton btnRemover;
     private javax.swing.JButton jButton1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JPanel panelBusca;
+    private javax.swing.JPanel panelContainer;
+    private javax.swing.JScrollPane scrollPaneTable;
+    private javax.swing.JScrollPane scrollPanelFrame;
     private javax.swing.JTable tbEmprestimos;
     // End of variables declaration//GEN-END:variables
 }
