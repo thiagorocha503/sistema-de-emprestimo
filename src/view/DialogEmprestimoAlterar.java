@@ -6,7 +6,7 @@
 package view;
 
 import javax.swing.JOptionPane;
-import model.Emprestimo;
+import model.bean.Emprestimo;
 import model.EmprestimoTableModel;
 
 /**

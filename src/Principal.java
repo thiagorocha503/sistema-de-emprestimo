@@ -14,6 +14,7 @@ import view.JanelaListagem;
 public class Principal {
     
     public static void main(String[] arg){
+            System.err.println("jdbc:sqlite" + System.getProperty("user.dir")+"src/data/dataBase.sqlite");
             try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
