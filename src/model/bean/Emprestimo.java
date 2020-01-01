@@ -12,6 +12,7 @@ import java.util.Date;
  * @author thiago
  */
 public class Emprestimo {
+    private int id;
     private String item;
     private String dataEmprestimo;
     private String dataDevolucao;
@@ -22,6 +23,15 @@ public class Emprestimo {
     public Emprestimo() {
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    
     public String getItem() {
         return item;
     }
