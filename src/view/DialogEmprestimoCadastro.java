@@ -5,7 +5,9 @@
  */
 package view;
 
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import model.bean.Emprestimo;
 import model.EmprestimoTableModel;
@@ -236,13 +238,29 @@ public class DialogEmprestimoCadastro extends javax.swing.JDialog {
         emprestimo.setDataDevolucao(dataDevolucao);
         EmprestimoDAO dao = new EmprestimoDAO();
         if(dao.insert(emprestimo)){
-            this.tableModel.addEmprestimo(emprestimo);
+            this.updateTable();
             this.cleanField();
+            JOptionPane.showMessageDialog(null, "Dados salvo com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao salvar dados", "Erro", JOptionPane.ERROR_MESSAGE);
         }
        
 
     }//GEN-LAST:event_btnEmprestarActionPerformed
 
+    //Pagar tabela e preenche dados atualizado do banco de dados
+    public void updateTable(){
+        //apaga tudo  
+        this.tableModel.removeAll();     
+        
+        EmprestimoDAO dao = new EmprestimoDAO();
+        ArrayList<Emprestimo> emprestimos;
+        emprestimos = dao.findAll();
+        
+        for(Emprestimo emprestimo: emprestimos){
+            this.tableModel.addEmprestimo(emprestimo);
+        }
+    }
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         this.dispose();
