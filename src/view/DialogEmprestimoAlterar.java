@@ -33,6 +33,7 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
         this.txtContato.setText(this.emprestimoTableModel.getValueAt(row, 3).toString());
         this.txtDtEmprestimo.setText(this.emprestimoTableModel.getValueAt(row, 4).toString());
         this.txtDtDevolucao.setText(this.emprestimoTableModel.getValueAt(row, 5).toString());
+        this.txtDtDevolvido.setText(this.emprestimoTableModel.getValueAt(row, 6).toString());
     }
 
     /**
@@ -57,7 +58,7 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         txtDtDevolucao = new javax.swing.JFormattedTextField();
         txtDtEmprestimo = new javax.swing.JFormattedTextField();
-        txtFormDtDevolvido = new javax.swing.JFormattedTextField();
+        txtDtDevolvido = new javax.swing.JFormattedTextField();
         lbDtDevolvido = new javax.swing.JLabel();
         btnAlterar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -129,7 +130,7 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
         }
 
         try {
-            txtFormDtDevolvido.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            txtDtDevolvido.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -156,7 +157,7 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
                         .addGap(32, 32, 32)
                         .addGroup(panelItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbDtDevolvido)
-                            .addComponent(txtFormDtDevolvido, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtDtDevolvido, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         panelItemLayout.setVerticalGroup(
@@ -176,7 +177,7 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
                     .addComponent(txtDtEmprestimo)
                     .addGroup(panelItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtDtDevolucao)
-                        .addComponent(txtFormDtDevolvido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtDtDevolvido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -247,7 +248,7 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
         String contato = this.txtContato.getText();
         String dataEmprestimo = this.txtDtEmprestimo.getText();
         String dataDevolucao = this.txtDtDevolucao.getText();
-        String dataDevolvido = this.txtFormDtDevolvido.getText();
+        String dataDevolvido = this.txtDtDevolvido.getText();
         if (!this.camposPreenchidos(nome, contato, item, dataEmprestimo, dataDevolucao)){
             JOptionPane.showMessageDialog(null,"Preencha todos os campos!");
             return;
@@ -362,8 +363,8 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
     private javax.swing.JPanel panelItem;
     private javax.swing.JFormattedTextField txtContato;
     private javax.swing.JFormattedTextField txtDtDevolucao;
+    private javax.swing.JFormattedTextField txtDtDevolvido;
     private javax.swing.JFormattedTextField txtDtEmprestimo;
-    private javax.swing.JFormattedTextField txtFormDtDevolvido;
     private javax.swing.JTextField txtItem;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables

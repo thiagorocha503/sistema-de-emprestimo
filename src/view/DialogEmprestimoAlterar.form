@@ -173,7 +173,7 @@
                               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lbDtDevolvido" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtFormDtDevolvido" min="-2" pref="109" max="-2" attributes="0"/>
+                                  <Component id="txtDtDevolvido" min="-2" pref="109" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -199,7 +199,7 @@
                           <Component id="txtDtEmprestimo" alignment="0" max="32767" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="txtDtDevolucao" alignment="3" max="32767" attributes="0"/>
-                              <Component id="txtFormDtDevolvido" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtDtDevolvido" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -239,7 +239,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JFormattedTextField" name="txtFormDtDevolvido">
+            <Component class="javax.swing.JFormattedTextField" name="txtDtDevolvido">
               <Properties>
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
                   <Format format="##/##/####" subtype="-1" type="5"/>
