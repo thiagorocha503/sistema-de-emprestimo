@@ -228,16 +228,23 @@ public class JanelaListagem extends javax.swing.JFrame {
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
         // TODO add your handling code here:
-        if(this.tbEmprestimos.getSelectedRow() != -1){
-            int resposta = JOptionPane.showConfirmDialog(null, "Tem certeza de deseja remover item selecionado?","Remoção",JOptionPane.YES_NO_OPTION);
-            System.out.println(resposta);
-            if (resposta==0){
-               this.emprestimoTabelModel.removeEmprestimo(this.tbEmprestimos.getSelectedRow());
-               JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null,"Escolha um emprestimo");
+        int row = this.tbEmprestimos.getSelectedRow();
+        if(row == -1){
+            JOptionPane.showMessageDialog(null,"Escolha um emprestimo");    
         }
+        int resposta = JOptionPane.showConfirmDialog(null, "Tem certeza de deseja remover item selecionado?","Remoção",JOptionPane.YES_NO_OPTION);
+        System.out.println(resposta);
+        if (resposta==0){
+            EmprestimoDAO dao = new EmprestimoDAO();        
+            int id = Integer.parseInt(this.emprestimoTabelModel.getValueAt(row, 0).toString());
+            if (dao.remove(id)){
+                this.emprestimoTabelModel.removeEmprestimo(this.tbEmprestimos.getSelectedRow());
+                JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso","Exclusão",JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao excluir", "erro", JOptionPane.ERROR_MESSAGE);
+            }            
+         }
+        
     }//GEN-LAST:event_btnRemoverActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
