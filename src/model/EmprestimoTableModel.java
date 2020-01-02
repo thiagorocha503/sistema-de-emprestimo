@@ -82,6 +82,7 @@ public class EmprestimoTableModel  extends AbstractTableModel{
     }
     @Override
     public void setValueAt(Object o, int row, int column) {
+        System.err.println(">>> "+column);
         switch(column) {
             case 0:
                 this.rows.get(row).setId(Integer.parseInt(o.toString()));
@@ -103,6 +104,7 @@ public class EmprestimoTableModel  extends AbstractTableModel{
                 break;
             case 6:
                 this.rows.get(row).setDataDevolvido(o.toString());
+                break;
             default:
                 throw new RuntimeException("Coluna inexistente");
         }
