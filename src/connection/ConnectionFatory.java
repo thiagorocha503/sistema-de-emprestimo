@@ -18,10 +18,12 @@ import jdk.nashorn.internal.runtime.regexp.joni.exception.JOniException;
  */
 public class ConnectionFatory {
     
-    private static final String PATH ="jdbc:sqlite:" + System.getProperty("user.dir")+"\\src\\data\\dataBase.db";
+    private static final String ROOT = new File("").getAbsolutePath();
+    private static final String PATH ="jdbc:sqlite:" + ROOT + "\\data\\dataBase.db";
     
     public static Connection  getConnection(){
         try {
+            System.err.println(PATH);
             Class.forName("org.sqlite.JDBC");
             Connection conn = DriverManager.getConnection(ConnectionFatory.PATH);
             //System.out.println("Coneção realizada com sucesso!");
