@@ -10,7 +10,6 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import model.EmprestimoTableModel;
-import javax.swing.table.AbstractTableModel;
 import model.bean.Emprestimo;
 import model.dao.EmprestimoDAO;
 
