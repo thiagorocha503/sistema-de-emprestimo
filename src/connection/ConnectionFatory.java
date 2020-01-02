@@ -83,10 +83,7 @@ public class ConnectionFatory {
             stmt.execute();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error: "+ex, "erro", JOptionPane.ERROR_MESSAGE);
-        }finally{
-            ConnectionFatory.closeConnection(conn, stmt);
         }
-        
     }
     
 }
