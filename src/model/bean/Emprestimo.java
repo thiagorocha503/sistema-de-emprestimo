@@ -16,8 +16,8 @@ public class Emprestimo {
     private String dataEmprestimo;
     private String dataDevolucao;
     private String dataDevolvido;
-    private String AmigoContato;
-    private String AmigoNome;
+    private String amigoContato;
+    private String amigoNome;
 
     public Emprestimo() {
     }
@@ -64,24 +64,24 @@ public class Emprestimo {
     }
 
     public String getAmigoContato() {
-        return AmigoContato;
+        return amigoContato;
     }
 
     public void setAmigoContato(String AmigoContato) {
-        this.AmigoContato = AmigoContato;
+        this.amigoContato = AmigoContato;
     }
 
     public String getAmigoNome() {
-        return AmigoNome;
+        return amigoNome;
     }
 
     public void setAmigoNome(String AmigoNome) {
-        this.AmigoNome = AmigoNome;
+        this.amigoNome = AmigoNome;
     }
 
     @Override
     public String toString() {
-        return "Emprestimo{" + "item=" + item + ", dataEmprestimo=" + dataEmprestimo + ", dataDevolucao=" + dataDevolucao + ", dataDevolvido=" + dataDevolvido + ", AmigoContato=" + AmigoContato + ", AmigoNome=" + AmigoNome + '}';
+        return "Emprestimo{" + "item=" + item + ", dataEmprestimo=" + dataEmprestimo + ", dataDevolucao=" + dataDevolucao + ", dataDevolvido=" + dataDevolvido + ", AmigoContato=" + amigoContato + ", AmigoNome=" + amigoNome + '}';
     }
     
     
