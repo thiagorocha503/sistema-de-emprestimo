@@ -5,11 +5,14 @@
  */
 package view;
 
+import java.util.ArrayList;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import model.EmprestimoTableModel;
 import javax.swing.table.AbstractTableModel;
+import model.bean.Emprestimo;
+import model.dao.EmprestimoDAO;
 
 /**
  *
@@ -26,12 +29,24 @@ public class JanelaListagem extends javax.swing.JFrame {
     public JanelaListagem() {
         initComponents();
         this.tbEmprestimos.setModel(this.emprestimoTabelModel);
+        this.findAll();
     }
 
     public JTable getTbEmprestimos() {
         return tbEmprestimos;
     }
-
+    
+    public void findAll(){
+        //apaga tudo  
+        emprestimoTabelModel.removeAll();
+        
+        EmprestimoDAO dao = new EmprestimoDAO();
+        ArrayList<Emprestimo> emprestimos;
+        emprestimos = dao.findAll();
+        for(Emprestimo emprestimo: emprestimos){
+            this.emprestimoTabelModel.addEmprestimo(emprestimo);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
