@@ -43,6 +43,16 @@ public class EmprestimoTableModel  extends AbstractTableModel{
         this.fireTableRowsDeleted(row, row);
     }
     
+    //
+    public void updateTable(ArrayList<Emprestimo> emprestimos){
+        //apaga tudo  
+        if(emprestimos != null){
+            this.removeAll();
+            for(Emprestimo emprestimo: emprestimos){
+                this.addEmprestimo(emprestimo);
+            }
+        }
+    }
     
     public void removeAll(){
         this.rows.clear();
