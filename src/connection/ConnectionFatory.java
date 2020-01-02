@@ -7,10 +7,7 @@ package connection;
 
 import java.io.File;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import jdk.nashorn.internal.runtime.regexp.joni.exception.JOniException;
+
 
 /**
  *
@@ -23,7 +20,6 @@ public class ConnectionFatory {
     
     public static Connection  getConnection(){
         try {
-            System.err.println(PATH);
             Class.forName("org.sqlite.JDBC");
             Connection conn = DriverManager.getConnection(ConnectionFatory.PATH);
             //System.out.println("Coneção realizada com sucesso!");
