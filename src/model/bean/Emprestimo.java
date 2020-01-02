@@ -5,7 +5,6 @@
  */
 package model.bean;
 
-import java.util.Date;
 
 /**
  *
