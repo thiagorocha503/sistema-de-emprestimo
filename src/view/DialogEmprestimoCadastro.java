@@ -235,9 +235,11 @@ public class DialogEmprestimoCadastro extends javax.swing.JDialog {
         emprestimo.setDataEmprestimo(dataEmprestimo);
         emprestimo.setDataDevolucao(dataDevolucao);
         EmprestimoDAO dao = new EmprestimoDAO();
-        dao.insert(emprestimo);
-        this.tableModel.addEmprestimo(emprestimo);
-        this.cleanField();
+        if(dao.insert(emprestimo)){
+            this.tableModel.addEmprestimo(emprestimo);
+            this.cleanField();
+        }
+       
 
     }//GEN-LAST:event_btnEmprestarActionPerformed
 
