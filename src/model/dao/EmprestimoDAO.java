@@ -11,8 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.bean.Emprestimo;
 
@@ -32,7 +30,7 @@ public class EmprestimoDAO {
         ArrayList<Emprestimo> emprestimos = new ArrayList<>();
         final String sql = "SELECT * FROM emprestimo";
         if (this.conn == null){
-            JOptionPane.showMessageDialog(null, "erro", "erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não foi possivel se conectar ao banco de dados", "erro", JOptionPane.ERROR_MESSAGE);
             return null;
         }       
         try {
@@ -52,7 +50,7 @@ public class EmprestimoDAO {
             }
             return emprestimos;
         } catch (SQLException ex) {
-            Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error: "+ex, "erro", JOptionPane.ERROR_MESSAGE);
             return emprestimos;
         }
        
@@ -62,7 +60,7 @@ public class EmprestimoDAO {
     public boolean insert(Emprestimo emprestimo) {
         final String sql = "INSERT INTO emprestimo(item_nome, pessoa_nome, pessoa_contato, dtEmprestimo, dtDevolucao) VALUES(?, ?, ?, ?, ?)";
         if (this.conn == null){
-            JOptionPane.showMessageDialog(null, "erro", "erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não foi possivel se conectar ao banco de dados", "erro", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         try {
@@ -75,7 +73,7 @@ public class EmprestimoDAO {
             stmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error: "+ex, "erro", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
@@ -83,7 +81,7 @@ public class EmprestimoDAO {
     public boolean remove(int id){
         final String sql = "DELETE FROM emprestimo where id=?";
         if (this.conn == null){
-            JOptionPane.showMessageDialog(null, "erro", "erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não foi possivel se conectar ao banco de dados", "erro", JOptionPane.ERROR_MESSAGE);
             return false;
         }      
         try {
@@ -92,7 +90,7 @@ public class EmprestimoDAO {
             stmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "erro", "erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error: "+ex, "erro", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         
@@ -116,7 +114,7 @@ public class EmprestimoDAO {
             stmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error: "+ex, "erro", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
