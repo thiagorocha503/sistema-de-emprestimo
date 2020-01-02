@@ -82,7 +82,6 @@ public class EmprestimoTableModel  extends AbstractTableModel{
     }
     @Override
     public void setValueAt(Object o, int row, int column) {
-        System.err.println(">>> "+column);
         switch(column) {
             case 0:
                 this.rows.get(row).setId(Integer.parseInt(o.toString()));
