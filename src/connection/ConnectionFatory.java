@@ -7,6 +7,9 @@ package connection;
 
 import java.io.File;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -22,6 +25,7 @@ public class ConnectionFatory {
         try {
             Class.forName("org.sqlite.JDBC");
             Connection conn = DriverManager.getConnection(ConnectionFatory.PATH);
+            initilazeDataBase(conn);
             //System.out.println("Coneção realizada com sucesso!");
             return conn;
         } catch (SQLException ex) {
@@ -69,5 +73,22 @@ public class ConnectionFatory {
         Object r = ConnectionFatory.getConnection();
     }
     
+    public static void initilazeDataBase(Connection conn){
+        String sql = "CREATE TABlE IF NOT EXISTS emprestimo (" +
+                    "    id             INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "    item_nome      CHAR    NOT NULL," +
+                    "    pessoa_nome    CHAR    NOT NULL," +
+                    "    pessoa_contato CHAR," +
+                    "    dtEmprestimo   DATE    NOT NULL," +
+                    "    dtDevolucao    DATE    NOT NULL," +
+                    "    dtDevolvido    DATE" +");  ";
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.execute();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error: "+ex, "erro", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
     
 }
