@@ -118,7 +118,7 @@ public class DialogDevolucao extends javax.swing.JDialog {
     private void btnDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverActionPerformed
         // TODO add your handling code here:
         if (this.txtData.getText().length() != 0 && this.row != -1){
-            this.emprestimoTabelModel.setValueAt(this.txtData.getText(), this.row, 5);
+            this.emprestimoTabelModel.setValueAt(this.txtData.getText(), this.row, 6);
             this.dispose();
         }
     }//GEN-LAST:event_btnDevolverActionPerformed
