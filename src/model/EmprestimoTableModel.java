@@ -16,7 +16,7 @@ import javax.swing.table.AbstractTableModel;
 public class EmprestimoTableModel  extends AbstractTableModel{
     
     private ArrayList<Emprestimo> rows = new ArrayList<>();
-    private String[] colums = {"item","nome","contato","data de emprestimo", "data de devolução","data devolvido"};
+    private String[] colums = {"id","item","nome","contato","data de emprestimo", "data de devolução","data devolvido"};
     
     @Override
     public String getColumnName(int column){
@@ -54,16 +54,18 @@ public class EmprestimoTableModel  extends AbstractTableModel{
     public Object getValueAt(int row, int column) {
         switch(column) {
             case 0:
-                return this.rows.get(row).getItem();
+                return this.rows.get(row).getId();
             case 1:
-                return this.rows.get(row).getAmigoNome();
+                return this.rows.get(row).getItem();
             case 2:
-                return this.rows.get(row).getAmigoContato();
+                return this.rows.get(row).getAmigoNome();
             case 3:
-                return this.rows.get(row).getDataEmprestimo();
+                return this.rows.get(row).getAmigoContato();
             case 4:
-                return this.rows.get(row).getDataDevolucao();
+                return this.rows.get(row).getDataEmprestimo();
             case 5:
+                return this.rows.get(row).getDataDevolucao();
+            case 6:
                 return this.rows.get(row).getDataDevolvido();             
         }
         return null;
@@ -72,21 +74,24 @@ public class EmprestimoTableModel  extends AbstractTableModel{
     public void setValueAt(Object o, int row, int column) {
         switch(column) {
             case 0:
-                this.rows.get(row).setItem(o.toString());
+                this.rows.get(row).setId(Integer.parseInt(o.toString()));
                 break;
             case 1:
-                this.rows.get(row).setAmigoNome(o.toString());
+                this.rows.get(row).setItem(o.toString());
                 break;
             case 2:
-                this.rows.get(row).setAmigoContato(o.toString());
+                this.rows.get(row).setAmigoNome(o.toString());
                 break;
             case 3:
-                this.rows.get(row).setDataEmprestimo(o.toString());
+                this.rows.get(row).setAmigoContato(o.toString());
                 break;
             case 4:
-                this.rows.get(row).setDataDevolucao(o.toString());
+                this.rows.get(row).setDataEmprestimo(o.toString());
                 break;
             case 5:
+                this.rows.get(row).setDataDevolucao(o.toString());
+                break;
+            case 6:
                 this.rows.get(row).setDataDevolvido(o.toString());            
         }
         this.fireTableRowsUpdated(row, row);
