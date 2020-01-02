@@ -7,8 +7,6 @@ package view;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
 import model.bean.Emprestimo;
 import model.EmprestimoTableModel;
 import model.dao.EmprestimoDAO;
