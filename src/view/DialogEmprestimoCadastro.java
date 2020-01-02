@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import model.bean.Emprestimo;
 import model.EmprestimoTableModel;
+import model.dao.EmprestimoDAO;
 
 /**
  *
@@ -233,6 +234,8 @@ public class DialogEmprestimoCadastro extends javax.swing.JDialog {
         emprestimo.setAmigoContato(contato);
         emprestimo.setDataEmprestimo(dataEmprestimo);
         emprestimo.setDataDevolucao(dataDevolucao);
+        EmprestimoDAO dao = new EmprestimoDAO();
+        dao.insert(emprestimo);
         this.tableModel.addEmprestimo(emprestimo);
         this.cleanField();
 
