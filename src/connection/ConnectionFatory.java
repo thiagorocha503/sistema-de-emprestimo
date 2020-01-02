@@ -7,8 +7,6 @@ package connection;
 
 import java.io.File;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
@@ -69,9 +67,6 @@ public class ConnectionFatory {
             }
         }
     }
-    public static void main(String[] args){
-        Object r = ConnectionFatory.getConnection();
-    }
     
     public static void initilazeDataBase(Connection conn){
         String sql = "CREATE TABlE IF NOT EXISTS emprestimo (" +
@@ -82,11 +77,14 @@ public class ConnectionFatory {
                     "    dtEmprestimo   DATE    NOT NULL," +
                     "    dtDevolucao    DATE    NOT NULL," +
                     "    dtDevolvido    DATE" +");  ";
+        PreparedStatement stmt=null;
         try {
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.execute();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error: "+ex, "erro", JOptionPane.ERROR_MESSAGE);
+        }finally{
+            ConnectionFatory.closeConnection(conn, stmt);
         }
         
     }
