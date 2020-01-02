@@ -42,6 +42,14 @@ public class EmprestimoTableModel  extends AbstractTableModel{
         this.rows.remove(row);
         this.fireTableRowsDeleted(row, row);
     }
+    
+    
+    public void removeAll(){
+        this.rows.clear();
+        fireTableRowsDeleted(0,getRowCount());
+    
+    }
+    
     @Override
     public Object getValueAt(int row, int column) {
         switch(column) {
