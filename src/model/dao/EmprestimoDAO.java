@@ -32,9 +32,9 @@ public class EmprestimoDAO {
         if (this.conn == null){
             JOptionPane.showMessageDialog(null, "Não foi possivel se conectar ao banco de dados", "erro", JOptionPane.ERROR_MESSAGE);
             return null;
-        }       
-        try {
-            PreparedStatement stmt;
+        }
+        PreparedStatement stmt=null;
+        try {         
             stmt = this.conn.prepareStatement(sql);
             ResultSet rows = stmt.executeQuery();
             while(rows.next()) {
@@ -52,6 +52,8 @@ public class EmprestimoDAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error: "+ex, "erro", JOptionPane.ERROR_MESSAGE);
             return emprestimos;
+        } finally{
+            ConnectionFatory.closeConnection(conn, stmt);
         }
        
         
@@ -63,8 +65,9 @@ public class EmprestimoDAO {
             JOptionPane.showMessageDialog(null, "Não foi possivel se conectar ao banco de dados", "erro", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        PreparedStatement stmt =null;
         try {
-            PreparedStatement stmt = this.conn.prepareStatement(sql);
+            stmt= this.conn.prepareStatement(sql);
             stmt.setString(1, emprestimo.getItem());
             stmt.setString(2, emprestimo.getAmigoNome());
             stmt.setString(3, emprestimo.getAmigoContato());
@@ -75,6 +78,8 @@ public class EmprestimoDAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error: "+ex, "erro", JOptionPane.ERROR_MESSAGE);
             return false;
+        } finally{
+            ConnectionFatory.closeConnection(conn, stmt);
         }
     }
     
@@ -83,15 +88,18 @@ public class EmprestimoDAO {
         if (this.conn == null){
             JOptionPane.showMessageDialog(null, "Não foi possivel se conectar ao banco de dados", "erro", JOptionPane.ERROR_MESSAGE);
             return false;
-        }      
+        }
+        PreparedStatement stmt =null;
         try {
-            PreparedStatement stmt = this.conn.prepareStatement(sql);
+            stmt = this.conn.prepareStatement(sql);
             stmt.setInt(1, id);
             stmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error: "+ex, "erro", JOptionPane.ERROR_MESSAGE);
             return false;
+        } finally{
+            ConnectionFatory.closeConnection(conn, stmt);
         }
         
     }
@@ -102,8 +110,9 @@ public class EmprestimoDAO {
             JOptionPane.showMessageDialog(null, "erro", "erro", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        PreparedStatement stmt =null;
         try {
-            PreparedStatement stmt = this.conn.prepareStatement(sql);
+            stmt = this.conn.prepareStatement(sql);
             stmt.setString(1, emprestimo.getItem());
             stmt.setString(2, emprestimo.getAmigoNome());
             stmt.setString(3, emprestimo.getAmigoContato());
@@ -116,6 +125,8 @@ public class EmprestimoDAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error: "+ex, "erro", JOptionPane.ERROR_MESSAGE);
             return false;
+        } finally{
+            ConnectionFatory.closeConnection(conn, stmt);
         }
     }
     
