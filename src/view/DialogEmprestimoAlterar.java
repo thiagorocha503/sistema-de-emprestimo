@@ -16,8 +16,8 @@ import model.dao.EmprestimoDAO;
  */
 public class DialogEmprestimoAlterar extends javax.swing.JDialog {
 
-    private EmprestimoTableModel emprestimoTableModel;
-    private int row;
+    private final EmprestimoTableModel emprestimoTableModel;
+    private final int row;
 
     /**
      * Creates new form DialogEmprestimoAlterar

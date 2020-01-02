@@ -20,7 +20,7 @@ import model.bean.Emprestimo;
  */
 public class EmprestimoDAO {
     
-    private Connection conn;
+    private final Connection conn;
 
     public EmprestimoDAO() {
         this.conn = ConnectionFatory.getConnection();

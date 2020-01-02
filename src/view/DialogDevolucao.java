@@ -13,8 +13,8 @@ import model.EmprestimoTableModel;
  */
 public class DialogDevolucao extends javax.swing.JDialog {
 
-    private EmprestimoTableModel emprestimoTabelModel;
-    private int row;
+    private final EmprestimoTableModel emprestimoTabelModel;
+    private final int row;
 
     /**
      * Creates new form DialogDevolucao

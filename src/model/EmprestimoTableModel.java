@@ -15,8 +15,8 @@ import javax.swing.table.AbstractTableModel;
  */
 public class EmprestimoTableModel  extends AbstractTableModel{
     
-    private ArrayList<Emprestimo> rows = new ArrayList<>();
-    private String[] colums = {"id","item","nome","contato","data de emprestimo", "data de devolução","data devolvido"};
+    private final ArrayList<Emprestimo> rows = new ArrayList<>();
+    private final String[] colums = {"id","item","nome","contato","data de emprestimo", "data de devolução","data devolvido"};
     
     @Override
     public String getColumnName(int column){

@@ -17,7 +17,7 @@ import model.dao.EmprestimoDAO;
  */
 public class DialogEmprestimoCadastro extends javax.swing.JDialog {
 
-    private EmprestimoTableModel tableModel;
+    private final EmprestimoTableModel tableModel;
 
     /**
      * Creates new form DialogEmprestimo

@@ -23,7 +23,7 @@ public class JanelaListagem extends javax.swing.JFrame {
      * Creates new form JanelaListagem
      */
     
-    private EmprestimoTableModel emprestimoTabelModel = new EmprestimoTableModel();
+    private final EmprestimoTableModel emprestimoTabelModel = new EmprestimoTableModel();
     
     public JanelaListagem() {
         initComponents();
