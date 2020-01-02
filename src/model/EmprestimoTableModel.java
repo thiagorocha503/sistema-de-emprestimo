@@ -102,7 +102,9 @@ public class EmprestimoTableModel  extends AbstractTableModel{
                 this.rows.get(row).setDataDevolucao(o.toString());
                 break;
             case 6:
-                this.rows.get(row).setDataDevolvido(o.toString());            
+                this.rows.get(row).setDataDevolvido(o.toString());
+            default:
+                throw new RuntimeException("Coluna inexistente");
         }
         this.fireTableRowsUpdated(row, row);
     }
