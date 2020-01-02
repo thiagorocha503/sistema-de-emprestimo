@@ -8,6 +8,7 @@ package view;
 import javax.swing.JOptionPane;
 import model.bean.Emprestimo;
 import model.EmprestimoTableModel;
+import model.dao.EmprestimoDAO;
 
 /**
  *
@@ -56,6 +57,8 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         txtDtDevolucao = new javax.swing.JFormattedTextField();
         txtDtEmprestimo = new javax.swing.JFormattedTextField();
+        txtFormDtDevolvido = new javax.swing.JFormattedTextField();
+        lbDtDevolvido = new javax.swing.JLabel();
         btnAlterar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
@@ -125,6 +128,14 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
             ex.printStackTrace();
         }
 
+        try {
+            txtFormDtDevolvido.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        lbDtDevolvido.setText("Data devolvido");
+
         javax.swing.GroupLayout panelItemLayout = new javax.swing.GroupLayout(panelItem);
         panelItem.setLayout(panelItemLayout);
         panelItemLayout.setHorizontalGroup(
@@ -132,7 +143,7 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
             .addGroup(panelItemLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtItem)
+                    .addComponent(txtItem, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
                     .addComponent(jLabel3)
                     .addGroup(panelItemLayout.createSequentialGroup()
                         .addGroup(panelItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,8 +151,12 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
                             .addComponent(jLabel4))
                         .addGap(18, 18, 18)
                         .addGroup(panelItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(txtDtDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtDtDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(32, 32, 32)
+                        .addGroup(panelItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbDtDevolvido)
+                            .addComponent(txtFormDtDevolvido, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         panelItemLayout.setVerticalGroup(
@@ -154,11 +169,14 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel5)
+                    .addComponent(lbDtDevolvido))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtDtEmprestimo)
-                    .addComponent(txtDtDevolucao))
+                    .addGroup(panelItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtDtDevolucao)
+                        .addComponent(txtFormDtDevolvido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -223,21 +241,41 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
+        int id = Integer.parseInt(this.emprestimoTableModel.getValueAt(this.row, 0).toString());
         String item = this.txtItem.getText();
         String nome = this.txtNome.getText();
         String contato = this.txtContato.getText();
         String dataEmprestimo = this.txtDtEmprestimo.getText();
         String dataDevolucao = this.txtDtDevolucao.getText();
+        String dataDevolvido = this.txtFormDtDevolvido.getText();
         if (!this.camposPreenchidos(nome, contato, item, dataEmprestimo, dataDevolucao)){
             JOptionPane.showMessageDialog(null,"Preencha todos os campos!");
             return;
         }
-        this.emprestimoTableModel.setValueAt(item, row, 0);
-        this.emprestimoTableModel.setValueAt(nome, row, 1);
-        this.emprestimoTableModel.setValueAt(contato, row, 2);
-        this.emprestimoTableModel.setValueAt(dataEmprestimo, row, 3);
-        this.emprestimoTableModel.setValueAt(dataDevolucao, row,4);       
-        this.dispose();
+        //Emprestimo
+        Emprestimo emprestimo = new Emprestimo();
+        emprestimo.setId(id);
+        emprestimo.setItem(item);
+        emprestimo.setAmigoNome(nome);
+        emprestimo.setAmigoContato(contato);
+        emprestimo.setDataEmprestimo(dataEmprestimo);
+        emprestimo.setDataDevolucao(dataDevolucao);
+        emprestimo.setDataDevolvido(dataDevolvido);
+        EmprestimoDAO dao = new EmprestimoDAO();
+        if(dao.update(emprestimo)){
+            //table
+            this.emprestimoTableModel.setValueAt(id, row,0);
+            this.emprestimoTableModel.setValueAt(item, row, 1);
+            this.emprestimoTableModel.setValueAt(nome, row, 2);
+            this.emprestimoTableModel.setValueAt(contato, row, 3);
+            this.emprestimoTableModel.setValueAt(dataEmprestimo, row, 4);
+            this.emprestimoTableModel.setValueAt(dataDevolucao, row, 5);   
+            this.emprestimoTableModel.setValueAt(dataDevolvido, row, 6);
+            
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Não foi possivel alterar", "Erro", JOptionPane.ERROR_MESSAGE);
+        }    
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     
@@ -316,6 +354,7 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lbDtDevolvido;
     private javax.swing.JLabel lblContato;
     private javax.swing.JLabel lblNome;
     private javax.swing.JPanel panelAmigo;
@@ -324,6 +363,7 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField txtContato;
     private javax.swing.JFormattedTextField txtDtDevolucao;
     private javax.swing.JFormattedTextField txtDtEmprestimo;
+    private javax.swing.JFormattedTextField txtFormDtDevolvido;
     private javax.swing.JTextField txtItem;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
