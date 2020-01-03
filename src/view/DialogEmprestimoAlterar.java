@@ -33,7 +33,9 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
         this.txtContato.setText(this.emprestimoTableModel.getValueAt(row, 3).toString());
         this.txtDtEmprestimo.setText(this.emprestimoTableModel.getValueAt(row, 4).toString());
         this.txtDtDevolucao.setText(this.emprestimoTableModel.getValueAt(row, 5).toString());
-        this.txtDtDevolvido.setText(this.emprestimoTableModel.getValueAt(row, 6).toString());
+        if(this.emprestimoTableModel.getValueAt(row, 6)!= null){
+            this.txtDtDevolvido.setText(this.emprestimoTableModel.getValueAt(row, 6).toString());
+        }      
     }
 
     /**
