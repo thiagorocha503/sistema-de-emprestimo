@@ -31,21 +31,6 @@ public class JanelaListagem extends javax.swing.JFrame {
         this.findAll();
     }
 
-    public JTable getTbEmprestimos() {
-        return tbEmprestimos;
-    }
-    
-    public void findAll(){
-        //apaga tudo  
-        emprestimoTabelModel.removeAll();
-        
-        EmprestimoDAO dao = new EmprestimoDAO();
-        ArrayList<Emprestimo> emprestimos;
-        emprestimos = dao.findAll();
-        for(Emprestimo emprestimo: emprestimos){
-            this.emprestimoTabelModel.addEmprestimo(emprestimo);
-        }
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -72,7 +57,6 @@ public class JanelaListagem extends javax.swing.JFrame {
         setTitle("Sistema de emprestimos");
         setMinimumSize(new java.awt.Dimension(800, 300));
         setName("frmPrincipal"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(700, 350));
         setSize(new java.awt.Dimension(700, 350));
 
         panelContainer.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
@@ -80,6 +64,17 @@ public class JanelaListagem extends javax.swing.JFrame {
         panelBusca.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         btnPesquisar.setText("Buscar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
+
+        txtBusca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBuscaKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelBuscaLayout = new javax.swing.GroupLayout(panelBusca);
         panelBusca.setLayout(panelBuscaLayout);
@@ -88,9 +83,9 @@ public class JanelaListagem extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBuscaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(txtBusca)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnPesquisar)
-                .addGap(19, 19, 19))
+                .addContainerGap())
         );
         panelBuscaLayout.setVerticalGroup(
             panelBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,7 +186,7 @@ public class JanelaListagem extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContainerLayout.createSequentialGroup()
                         .addGroup(panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(panelButtons, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(scrollPaneTable, javax.swing.GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE))
+                            .addComponent(scrollPaneTable, javax.swing.GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE))
                         .addContainerGap())))
         );
         panelContainerLayout.setVerticalGroup(
@@ -225,12 +220,42 @@ public class JanelaListagem extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    public JTable getTbEmprestimos() {
+        return tbEmprestimos;
+    }
+    
+    public void findAll(){
+        //apaga tudo  
+        emprestimoTabelModel.removeAll();
+        
+        EmprestimoDAO dao = new EmprestimoDAO();
+        ArrayList<Emprestimo> emprestimos;
+        emprestimos = dao.findAll();
+        for(Emprestimo emprestimo: emprestimos){
+            this.emprestimoTabelModel.addEmprestimo(emprestimo);
+        }
+    }
+    
+    public void findByItem(String item){
+        //apaga tudo  
+        emprestimoTabelModel.removeAll();
+        
+        EmprestimoDAO dao = new EmprestimoDAO();
+        ArrayList<Emprestimo> emprestimos;
+        emprestimos = dao.findByItem(item);
+        for(Emprestimo emprestimo: emprestimos){
+            this.emprestimoTabelModel.addEmprestimo(emprestimo);
+        }
+    }
+    
     private void btnEmprestarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmprestarActionPerformed
         // TODO add your handling code here:
         JDialog janelaEmprestimo = new DialogEmprestimoCadastro(this, true,this.emprestimoTabelModel);
         janelaEmprestimo.setVisible(true);
     }//GEN-LAST:event_btnEmprestarActionPerformed
 
+    
+    
     private void btnDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverActionPerformed
         // TODO add your handling code here:
         if (this.tbEmprestimos.getSelectedRow() != -1){
@@ -272,6 +297,28 @@ public class JanelaListagem extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Selecione um emprestimo");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        // TODO add your handling code here:
+        if(this.txtBusca.getText() == ""){
+            //findAll
+            this.findAll();       
+        } else {
+            this.findByItem(this.txtBusca.getText());
+        }
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void txtBuscaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == evt.VK_ENTER){
+            if(this.txtBusca.getText() == ""){
+            //findAll
+                this.findAll();       
+            } else {
+                this.findByItem(this.txtBusca.getText());
+            }
+        }
+    }//GEN-LAST:event_txtBuscaKeyPressed
 
     /**
      * @param args the command line arguments
