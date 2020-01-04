@@ -140,7 +140,7 @@ public class EmprestimoDAO {
         PreparedStatement stmt=null;
         try {         
             stmt = this.conn.prepareStatement(sql);
-            stmt.setString(1,item+"%");
+            stmt.setString(1,"%"+item+"%");
             ResultSet rows = stmt.executeQuery();
             while(rows.next()) {
                 Emprestimo emprestimo = new Emprestimo();
