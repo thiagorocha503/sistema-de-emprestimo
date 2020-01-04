@@ -47,11 +47,12 @@ public class JanelaListagem extends javax.swing.JFrame {
         txtBusca = new javax.swing.JTextField();
         scrollPaneTable = new javax.swing.JScrollPane();
         tbEmprestimos = new javax.swing.JTable();
-        btnEmprestar = new javax.swing.JButton();
         panelButtons = new javax.swing.JPanel();
         btnDevolver = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnRemover = new javax.swing.JButton();
+        btnSair = new javax.swing.JButton();
+        btnEmprestar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de emprestimos");
@@ -82,10 +83,10 @@ public class JanelaListagem extends javax.swing.JFrame {
             panelBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBuscaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtBusca)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnPesquisar)
-                .addContainerGap())
+                .addGap(330, 330, 330))
         );
         panelBuscaLayout.setVerticalGroup(
             panelBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,14 +117,12 @@ public class JanelaListagem extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        scrollPaneTable.setViewportView(tbEmprestimos);
-
-        btnEmprestar.setText("Novo emprestimo");
-        btnEmprestar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEmprestarActionPerformed(evt);
+        tbEmprestimos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbEmprestimosMouseClicked(evt);
             }
         });
+        scrollPaneTable.setViewportView(tbEmprestimos);
 
         btnDevolver.setText("Devolver");
         btnDevolver.addActionListener(new java.awt.event.ActionListener() {
@@ -146,6 +145,13 @@ public class JanelaListagem extends javax.swing.JFrame {
             }
         });
 
+        btnSair.setText("Sair");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelButtonsLayout = new javax.swing.GroupLayout(panelButtons);
         panelButtons.setLayout(panelButtonsLayout);
         panelButtonsLayout.setHorizontalGroup(
@@ -155,9 +161,11 @@ public class JanelaListagem extends javax.swing.JFrame {
                 .addComponent(btnRemover)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEditar)
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDevolver)
-                .addGap(4, 4, 4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSair)
+                .addGap(22, 22, 22))
         );
         panelButtonsLayout.setVerticalGroup(
             panelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,8 +174,16 @@ public class JanelaListagem extends javax.swing.JFrame {
                 .addGroup(panelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditar)
                     .addComponent(btnRemover)
-                    .addComponent(btnDevolver)))
+                    .addComponent(btnDevolver)
+                    .addComponent(btnSair)))
         );
+
+        btnEmprestar.setText("Novo emprestimo");
+        btnEmprestar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEmprestarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelContainerLayout = new javax.swing.GroupLayout(panelContainer);
         panelContainer.setLayout(panelContainerLayout);
@@ -178,25 +194,25 @@ public class JanelaListagem extends javax.swing.JFrame {
                 .addGroup(panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContainerLayout.createSequentialGroup()
                         .addGroup(panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(panelButtons, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(scrollPaneTable))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContainerLayout.createSequentialGroup()
+                        .addGroup(panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(panelContainerLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnEmprestar))
                             .addComponent(panelBusca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(16, 16, 16))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContainerLayout.createSequentialGroup()
-                        .addGroup(panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(panelButtons, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(scrollPaneTable, javax.swing.GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE))
-                        .addContainerGap())))
+                        .addGap(16, 16, 16))))
         );
         panelContainerLayout.setVerticalGroup(
             panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelContainerLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnEmprestar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEmprestar)
+                .addGap(18, 18, 18)
                 .addComponent(scrollPaneTable, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -209,7 +225,7 @@ public class JanelaListagem extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPanelFrame, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE)
+            .addComponent(scrollPanelFrame, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -320,6 +336,19 @@ public class JanelaListagem extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtBuscaKeyPressed
 
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
+
+    private void tbEmprestimosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbEmprestimosMouseClicked
+        // TODO add your handling code here:
+        if(evt.getClickCount()==2 && this.tbEmprestimos.getSelectedRow() != -1){
+            new DialogEmprestimoAlterar(this, true, emprestimoTabelModel, this.tbEmprestimos.getSelectedRow()).setVisible(true);
+        }
+        
+    }//GEN-LAST:event_tbEmprestimosMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -361,6 +390,7 @@ public class JanelaListagem extends javax.swing.JFrame {
     private javax.swing.JButton btnEmprestar;
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnRemover;
+    private javax.swing.JButton btnSair;
     private javax.swing.JPanel panelBusca;
     private javax.swing.JPanel panelButtons;
     private javax.swing.JPanel panelContainer;
