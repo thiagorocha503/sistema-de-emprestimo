@@ -130,5 +130,37 @@ public class EmprestimoDAO {
         }
     }
     
-    
+     public ArrayList<Emprestimo> findByItem(String item){
+        ArrayList<Emprestimo> emprestimos = new ArrayList<>();
+        final String sql = "SELECT * FROM emprestimo WHERE item_nome LIKE ?";
+        if (this.conn == null){
+            JOptionPane.showMessageDialog(null, "Não foi possivel se conectar ao banco de dados", "erro", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        PreparedStatement stmt=null;
+        try {         
+            stmt = this.conn.prepareStatement(sql);
+            stmt.setString(1,item+"%");
+            ResultSet rows = stmt.executeQuery();
+            while(rows.next()) {
+                Emprestimo emprestimo = new Emprestimo();
+                emprestimo.setId(rows.getInt("id"));
+                emprestimo.setItem(rows.getString("item_nome"));
+                emprestimo.setAmigoNome(rows.getString("pessoa_nome"));
+                emprestimo.setAmigoContato(rows.getString("pessoa_contato"));
+                emprestimo.setDataEmprestimo(rows.getString("dtEmprestimo"));
+                emprestimo.setDataDevolucao(rows.getString("dtDevolucao"));
+                emprestimo.setDataDevolvido(rows.getString("dtDevolvido"));
+                emprestimos.add(emprestimo);               
+            }
+            return emprestimos;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error: "+ex, "erro", JOptionPane.ERROR_MESSAGE);
+            return emprestimos;
+        } finally{
+            ConnectionFatory.closeConnection(conn, stmt);
+        }
+       
+        
+    }
 }
