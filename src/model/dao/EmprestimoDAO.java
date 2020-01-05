@@ -36,9 +36,10 @@ public class EmprestimoDAO {
             return null;
         }
         PreparedStatement stmt=null;
+        ResultSet rows=null;
         try {         
             stmt = this.conn.prepareStatement(sql);
-            ResultSet rows = stmt.executeQuery();
+            rows = stmt.executeQuery();
             while(rows.next()) {
                 Emprestimo emprestimo = new Emprestimo();
                 emprestimo.setId(rows.getInt("id"));
@@ -140,10 +141,11 @@ public class EmprestimoDAO {
             return null;
         }
         PreparedStatement stmt=null;
+        ResultSet rows =null;
         try {         
             stmt = this.conn.prepareStatement(sql);
             stmt.setString(1,"%"+item+"%");
-            ResultSet rows = stmt.executeQuery();
+            rows = stmt.executeQuery();
             while(rows.next()) {
                 Emprestimo emprestimo = new Emprestimo();
                 emprestimo.setId(rows.getInt("id"));

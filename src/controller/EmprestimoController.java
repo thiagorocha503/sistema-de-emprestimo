@@ -32,9 +32,10 @@ public class EmprestimoController {
         if(emprestimos == null){
             return;
         }
-        for(Emprestimo emprestimo: emprestimos){
+        // for in
+        emprestimos.forEach((emprestimo) -> {
             this.emprestimoTabelModel.addEmprestimo(emprestimo);
-        }
+        });
 
     }
     
@@ -44,9 +45,10 @@ public class EmprestimoController {
         if(emprestimos == null){
             return;
         }
-        for(Emprestimo emprestimo: emprestimos){
+        //for in
+        emprestimos.forEach((emprestimo) -> {
             this.emprestimoTabelModel.addEmprestimo(emprestimo);
-        }
+        });
 
     }
     

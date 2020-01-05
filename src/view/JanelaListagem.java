@@ -6,6 +6,7 @@
 package view;
 
 import controller.EmprestimoController;
+import java.awt.event.KeyEvent;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -319,7 +320,7 @@ public class JanelaListagem extends javax.swing.JFrame {
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         // TODO add your handling code here:
-        if(this.txtBusca.getText() == ""){
+        if(this.txtBusca.getText().equals("")){
             //findAll
             this.controller.findAll();
         } else {
@@ -329,8 +330,8 @@ public class JanelaListagem extends javax.swing.JFrame {
 
     private void txtBuscaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode() == evt.VK_ENTER){
-            if(this.txtBusca.getText() == ""){
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            if(this.txtBusca.getText().equals("")){
             //findAll
                 this.findAll();       
             } else {
