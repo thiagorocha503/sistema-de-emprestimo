@@ -5,6 +5,7 @@
  */
 package view;
 
+import controller.EmprestimoController;
 import java.util.ArrayList;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -22,11 +23,12 @@ public class JanelaListagem extends javax.swing.JFrame {
     /**
      * Creates new form JanelaListagem
      */
-    
+    private EmprestimoController controller;
     private final EmprestimoTableModel emprestimoTabelModel = new EmprestimoTableModel();
     
     public JanelaListagem() {
         initComponents();
+        this.controller = new EmprestimoController(emprestimoTabelModel);
         this.tbEmprestimos.setModel(this.emprestimoTabelModel);
         this.findAll();
     }
@@ -243,25 +245,14 @@ public class JanelaListagem extends javax.swing.JFrame {
     public void findAll(){
         //apaga tudo  
         emprestimoTabelModel.removeAll();
-        
-        EmprestimoDAO dao = new EmprestimoDAO();
-        ArrayList<Emprestimo> emprestimos;
-        emprestimos = dao.findAll();
-        for(Emprestimo emprestimo: emprestimos){
-            this.emprestimoTabelModel.addEmprestimo(emprestimo);
-        }
+        this.controller.findAll();
     }
     
     public void findByItem(String item){
-        //apaga tudo  
+         //apaga tudo  
         emprestimoTabelModel.removeAll();
-        
-        EmprestimoDAO dao = new EmprestimoDAO();
-        ArrayList<Emprestimo> emprestimos;
-        emprestimos = dao.findByItem(item);
-        for(Emprestimo emprestimo: emprestimos){
-            this.emprestimoTabelModel.addEmprestimo(emprestimo);
-        }
+        this.controller.findByItem(item);
+
     }
     
     private void btnEmprestarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmprestarActionPerformed
@@ -291,12 +282,11 @@ public class JanelaListagem extends javax.swing.JFrame {
         }
         int resposta = JOptionPane.showConfirmDialog(null, "Tem certeza de deseja remover item selecionado?","Remoção",JOptionPane.YES_NO_OPTION);
         System.out.println(resposta);
-        if (resposta==0){
-            EmprestimoDAO dao = new EmprestimoDAO();        
+        if (resposta==0){      
             int id = Integer.parseInt(this.emprestimoTabelModel.getValueAt(row, 0).toString());
-            if (dao.remove(id)){
-                this.emprestimoTabelModel.removeEmprestimo(this.tbEmprestimos.getSelectedRow());
-                JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso","Exclusão",JOptionPane.INFORMATION_MESSAGE);
+            if (this.controller.remover(id)){
+                this.findAll();
+                JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso","Exclusão",JOptionPane.INFORMATION_MESSAGE);          
             } else {
                 JOptionPane.showMessageDialog(null, "Erro ao excluir", "erro", JOptionPane.ERROR_MESSAGE);
             }            
@@ -318,9 +308,9 @@ public class JanelaListagem extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(this.txtBusca.getText() == ""){
             //findAll
-            this.findAll();       
+            this.controller.findAll();
         } else {
-            this.findByItem(this.txtBusca.getText());
+            this.controller.findByItem(this.txtBusca.getText());
         }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
