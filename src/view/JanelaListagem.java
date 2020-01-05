@@ -5,13 +5,12 @@
  */
 package view;
 
-import java.util.ArrayList;
+import controller.EmprestimoController;
+import java.awt.event.KeyEvent;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import model.EmprestimoTableModel;
-import model.bean.Emprestimo;
-import model.dao.EmprestimoDAO;
 
 /**
  *
@@ -22,11 +21,12 @@ public class JanelaListagem extends javax.swing.JFrame {
     /**
      * Creates new form JanelaListagem
      */
-    
+    private final EmprestimoController controller;
     private final EmprestimoTableModel emprestimoTabelModel = new EmprestimoTableModel();
     
     public JanelaListagem() {
         initComponents();
+        this.controller = new EmprestimoController(emprestimoTabelModel);
         this.tbEmprestimos.setModel(this.emprestimoTabelModel);
         this.findAll();
     }
@@ -56,7 +56,7 @@ public class JanelaListagem extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de emprestimos");
-        setMinimumSize(new java.awt.Dimension(800, 300));
+        setMinimumSize(new java.awt.Dimension(800, 400));
         setName("frmPrincipal"); // NOI18N
         setSize(new java.awt.Dimension(700, 350));
 
@@ -243,43 +243,49 @@ public class JanelaListagem extends javax.swing.JFrame {
     public void findAll(){
         //apaga tudo  
         emprestimoTabelModel.removeAll();
-        
-        EmprestimoDAO dao = new EmprestimoDAO();
-        ArrayList<Emprestimo> emprestimos;
-        emprestimos = dao.findAll();
-        for(Emprestimo emprestimo: emprestimos){
-            this.emprestimoTabelModel.addEmprestimo(emprestimo);
-        }
+        this.controller.findAll();
     }
     
     public void findByItem(String item){
-        //apaga tudo  
+         //apaga tudo  
         emprestimoTabelModel.removeAll();
-        
-        EmprestimoDAO dao = new EmprestimoDAO();
-        ArrayList<Emprestimo> emprestimos;
-        emprestimos = dao.findByItem(item);
-        for(Emprestimo emprestimo: emprestimos){
-            this.emprestimoTabelModel.addEmprestimo(emprestimo);
-        }
+        this.controller.findByItem(item);
+
     }
     
     private void btnEmprestarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmprestarActionPerformed
         // TODO add your handling code here:
-        JDialog janelaEmprestimo = new DialogEmprestimoCadastro(this, true,this.emprestimoTabelModel);
+        JDialog janelaEmprestimo = new DialogEmprestimoCadastro(this, true,this.controller);
         janelaEmprestimo.setVisible(true);
     }//GEN-LAST:event_btnEmprestarActionPerformed
 
     
-    
+    private boolean isDevolvido(Object data){
+        if (data == null){
+            return false;
+        }
+        if (data.equals("") || data.equals("  /  /  /")){
+            return false;
+        } else {
+            return true;
+        }
+    }
     private void btnDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverActionPerformed
         // TODO add your handling code here:
-        if (this.tbEmprestimos.getSelectedRow() != -1){
-            JDialog dialogEmprestimo = new DialogDevolucao(this, true, this.emprestimoTabelModel, this.tbEmprestimos.getSelectedRow());
+        if (this.tbEmprestimos.getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(null, "Selecione um emprestimos");
+            return;
+        }
+        Object data = this.emprestimoTabelModel.getValueAt(this.tbEmprestimos.getSelectedRow(), 6);
+        if (! isDevolvido(data)){
+            int id = Integer.parseInt(this.emprestimoTabelModel.getValueAt(this.tbEmprestimos.getSelectedRow() , 0).toString());
+            System.err.println(id);
+            JDialog dialogEmprestimo = new DialogDevolucao(this, true, this.controller, id);
             dialogEmprestimo.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(null, "Selecione um emprestimos");
-        }
+            JOptionPane.showMessageDialog(null, "Item já devolvido");
+        }           
+        
         
     }//GEN-LAST:event_btnDevolverActionPerformed
 
@@ -287,16 +293,15 @@ public class JanelaListagem extends javax.swing.JFrame {
         // TODO add your handling code here:
         int row = this.tbEmprestimos.getSelectedRow();
         if(row == -1){
-            JOptionPane.showMessageDialog(null,"Escolha um emprestimo");    
+            JOptionPane.showMessageDialog(null,"Escolha um emprestimo");
+            return;
         }
         int resposta = JOptionPane.showConfirmDialog(null, "Tem certeza de deseja remover item selecionado?","Remoção",JOptionPane.YES_NO_OPTION);
         System.out.println(resposta);
-        if (resposta==0){
-            EmprestimoDAO dao = new EmprestimoDAO();        
+        if (resposta==0){      
             int id = Integer.parseInt(this.emprestimoTabelModel.getValueAt(row, 0).toString());
-            if (dao.remove(id)){
-                this.emprestimoTabelModel.removeEmprestimo(this.tbEmprestimos.getSelectedRow());
-                JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso","Exclusão",JOptionPane.INFORMATION_MESSAGE);
+            if (this.controller.remover(id)){
+                JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso","Exclusão",JOptionPane.INFORMATION_MESSAGE);          
             } else {
                 JOptionPane.showMessageDialog(null, "Erro ao excluir", "erro", JOptionPane.ERROR_MESSAGE);
             }            
@@ -307,8 +312,7 @@ public class JanelaListagem extends javax.swing.JFrame {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
         if (this.tbEmprestimos.getSelectedRow() != -1){
-            DialogEmprestimoAlterar  emprestimoAlterar = new DialogEmprestimoAlterar(this, true, emprestimoTabelModel, this.tbEmprestimos.getSelectedRow());
-            emprestimoAlterar.setVisible(true);
+            new DialogEmprestimoAlterar(this, true, controller, emprestimoTabelModel, this.tbEmprestimos.getSelectedRow()).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null,"Selecione um emprestimo");
         }
@@ -316,18 +320,18 @@ public class JanelaListagem extends javax.swing.JFrame {
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         // TODO add your handling code here:
-        if(this.txtBusca.getText() == ""){
+        if(this.txtBusca.getText().equals("")){
             //findAll
-            this.findAll();       
+            this.controller.findAll();
         } else {
-            this.findByItem(this.txtBusca.getText());
+            this.controller.findByItem(this.txtBusca.getText());
         }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void txtBuscaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode() == evt.VK_ENTER){
-            if(this.txtBusca.getText() == ""){
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            if(this.txtBusca.getText().equals("")){
             //findAll
                 this.findAll();       
             } else {
@@ -344,7 +348,7 @@ public class JanelaListagem extends javax.swing.JFrame {
     private void tbEmprestimosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbEmprestimosMouseClicked
         // TODO add your handling code here:
         if(evt.getClickCount()==2 && this.tbEmprestimos.getSelectedRow() != -1){
-            new DialogEmprestimoAlterar(this, true, emprestimoTabelModel, this.tbEmprestimos.getSelectedRow()).setVisible(true);
+            new DialogEmprestimoAlterar(this, true, controller, emprestimoTabelModel, this.tbEmprestimos.getSelectedRow()).setVisible(true);
         }
         
     }//GEN-LAST:event_tbEmprestimosMouseClicked
@@ -365,22 +369,16 @@ public class JanelaListagem extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JanelaListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JanelaListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JanelaListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(JanelaListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new JanelaListagem().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new JanelaListagem().setVisible(true);
         });
     }
 

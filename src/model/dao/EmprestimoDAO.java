@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.bean.Emprestimo;
 
@@ -34,9 +36,10 @@ public class EmprestimoDAO {
             return null;
         }
         PreparedStatement stmt=null;
+        ResultSet rows=null;
         try {         
             stmt = this.conn.prepareStatement(sql);
-            ResultSet rows = stmt.executeQuery();
+            rows = stmt.executeQuery();
             while(rows.next()) {
                 Emprestimo emprestimo = new Emprestimo();
                 emprestimo.setId(rows.getInt("id"));
@@ -138,10 +141,11 @@ public class EmprestimoDAO {
             return null;
         }
         PreparedStatement stmt=null;
+        ResultSet rows =null;
         try {         
             stmt = this.conn.prepareStatement(sql);
             stmt.setString(1,"%"+item+"%");
-            ResultSet rows = stmt.executeQuery();
+            rows = stmt.executeQuery();
             while(rows.next()) {
                 Emprestimo emprestimo = new Emprestimo();
                 emprestimo.setId(rows.getInt("id"));
@@ -162,5 +166,27 @@ public class EmprestimoDAO {
         }
        
         
+    }
+     
+   
+    public boolean devolver(int id, String data){
+        final String sql = "UPDATE emprestimo  SET dtDevolvido=? WHERE id=?";
+        if (this.conn == null){
+            JOptionPane.showMessageDialog(null, "erro", "erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        PreparedStatement stmt=null;
+        try {
+             stmt = this.conn.prepareStatement(sql);
+             stmt.setString(1, data);
+             stmt.setInt(2, id);
+             stmt.executeUpdate();
+             return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally{
+            ConnectionFatory.closeConnection(conn, stmt);
+        }
     }
 }
