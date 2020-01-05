@@ -321,17 +321,15 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                DialogEmprestimoAlterar dialog = new DialogEmprestimoAlterar(new javax.swing.JFrame(),true, new EmprestimoController(null) , new EmprestimoTableModel(),-1);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            DialogEmprestimoAlterar dialog = new DialogEmprestimoAlterar(new javax.swing.JFrame(),true, new EmprestimoController(null) , new EmprestimoTableModel(),-1);
+            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    System.exit(0);
+                }
+            });
+            dialog.setVisible(true);
         });
     }
 
