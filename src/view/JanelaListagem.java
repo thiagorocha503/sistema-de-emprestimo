@@ -257,7 +257,7 @@ public class JanelaListagem extends javax.swing.JFrame {
     
     private void btnEmprestarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmprestarActionPerformed
         // TODO add your handling code here:
-        JDialog janelaEmprestimo = new DialogEmprestimoCadastro(this, true,this.emprestimoTabelModel);
+        JDialog janelaEmprestimo = new DialogEmprestimoCadastro(this, true,this.controller);
         janelaEmprestimo.setVisible(true);
     }//GEN-LAST:event_btnEmprestarActionPerformed
 
@@ -285,7 +285,6 @@ public class JanelaListagem extends javax.swing.JFrame {
         if (resposta==0){      
             int id = Integer.parseInt(this.emprestimoTabelModel.getValueAt(row, 0).toString());
             if (this.controller.remover(id)){
-                this.findAll();
                 JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso","Exclusão",JOptionPane.INFORMATION_MESSAGE);          
             } else {
                 JOptionPane.showMessageDialog(null, "Erro ao excluir", "erro", JOptionPane.ERROR_MESSAGE);

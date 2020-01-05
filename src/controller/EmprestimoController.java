@@ -22,6 +22,10 @@ public class EmprestimoController {
         this.emprestimoTabelModel = emprestimoTabelModel;
     }
     
+    public EmprestimoTableModel getEmprestimoTableModel(){
+        return this.emprestimoTabelModel;
+    }
+    
     public void findByItem(String busca){
         EmprestimoDAO dao = new EmprestimoDAO();
         ArrayList<Emprestimo> emprestimos = dao.findByItem(busca);
@@ -50,12 +54,34 @@ public class EmprestimoController {
         EmprestimoDAO dao = new EmprestimoDAO();
         if(dao.remove(id)){
             this.emprestimoTabelModel.removeAll();
+            this.updateTable();
             return true;
         } else {
             return false;
         }
     }
     
+    public boolean insert(String nome, String contato, String item, String dataEmprestimo, String dataDevolucao){
+        Emprestimo emprestimo = new Emprestimo();
+        emprestimo.setItem(item);
+        emprestimo.setAmigoNome(nome);
+        emprestimo.setAmigoContato(contato);
+        emprestimo.setDataEmprestimo(dataEmprestimo);
+        emprestimo.setDataDevolucao(dataDevolucao);
+        EmprestimoDAO dao = new EmprestimoDAO();
+        if (dao.insert(emprestimo)){
+            this.updateTable();
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public void updateTable(){
+        EmprestimoDAO dao = new EmprestimoDAO();
+        ArrayList<Emprestimo> emprestimos = dao.findAll();
+        this.emprestimoTabelModel.updateTable(emprestimos);
+    }
     
     
 }
