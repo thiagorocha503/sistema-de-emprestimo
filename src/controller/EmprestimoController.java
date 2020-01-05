@@ -100,5 +100,8 @@ public class EmprestimoController {
         this.emprestimoTabelModel.updateTable(emprestimos);
     }
     
-    
+    public boolean devolver(int id, String data){
+        EmprestimoDAO dao = new EmprestimoDAO();
+        return dao.devolver(id, data);
+    }
 }

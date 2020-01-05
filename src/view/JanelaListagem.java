@@ -259,15 +259,32 @@ public class JanelaListagem extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEmprestarActionPerformed
 
     
-    
+    private boolean isDevolvido(Object data){
+        if (data == null){
+            return false;
+        }
+        if (data.equals("") || data.equals("  /  /  /")){
+            return false;
+        } else {
+            return true;
+        }
+    }
     private void btnDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverActionPerformed
         // TODO add your handling code here:
-        if (this.tbEmprestimos.getSelectedRow() != -1){
-            JDialog dialogEmprestimo = new DialogDevolucao(this, true, this.emprestimoTabelModel, this.tbEmprestimos.getSelectedRow());
+        if (this.tbEmprestimos.getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(null, "Selecione um emprestimos");
+            return;
+        }
+        Object data = this.emprestimoTabelModel.getValueAt(this.tbEmprestimos.getSelectedRow(), 6);
+        if (! isDevolvido(data)){
+            int id = Integer.parseInt(this.emprestimoTabelModel.getValueAt(this.tbEmprestimos.getSelectedRow() , 0).toString());
+            System.err.println(id);
+            JDialog dialogEmprestimo = new DialogDevolucao(this, true, this.controller, id);
             dialogEmprestimo.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(null, "Selecione um emprestimos");
-        }
+            JOptionPane.showMessageDialog(null, "Item já devolvido");
+        }           
+        
         
     }//GEN-LAST:event_btnDevolverActionPerformed
 

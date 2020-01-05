@@ -5,6 +5,8 @@
  */
 package view;
 
+import controller.EmprestimoController;
+import javax.swing.JOptionPane;
 import model.EmprestimoTableModel;
 
 /**
@@ -13,16 +15,16 @@ import model.EmprestimoTableModel;
  */
 public class DialogDevolucao extends javax.swing.JDialog {
 
-    private final EmprestimoTableModel emprestimoTabelModel;
-    private final int row;
 
+    private final int id;
+    private final EmprestimoController controller;
     /**
      * Creates new form DialogDevolucao
      */
-    public DialogDevolucao(java.awt.Frame parent, boolean modal, EmprestimoTableModel emprestimoTableModel, int linha) {
+    public DialogDevolucao(java.awt.Frame parent, boolean modal, EmprestimoController controller, int id) {
         super(parent, modal);
-        this.row =linha;
-        this.emprestimoTabelModel = emprestimoTableModel;
+        this.id = id;
+        this.controller = controller;
         initComponents();
     }
 
@@ -117,9 +119,17 @@ public class DialogDevolucao extends javax.swing.JDialog {
 
     private void btnDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverActionPerformed
         // TODO add your handling code here:
-        if (this.txtData.getText().length() != 0 && this.row != -1){
-            this.emprestimoTabelModel.setValueAt(this.txtData.getText(), this.row, 6);
-            this.dispose();
+        if (this.txtData.getText().length() != 0 && !this.txtData.getText().equals("  /  /    ") ){
+            if(this.controller.devolver(id, this.txtData.getText() )){            
+                this.controller.updateTable();
+                this.dispose();
+                JOptionPane.showMessageDialog(null,"Item devolvido com sucesso");
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Não foi possivel devolver item");
+            }       
+        } else{
+            JOptionPane.showMessageDialog(null, "Preencha o campo de devolução");
         }
     }//GEN-LAST:event_btnDevolverActionPerformed
 
@@ -158,7 +168,7 @@ public class DialogDevolucao extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DialogDevolucao dialog = new DialogDevolucao(new javax.swing.JFrame(), true, new EmprestimoTableModel(), -1);
+                DialogDevolucao dialog = new DialogDevolucao(new javax.swing.JFrame(), true, new EmprestimoController(null), 0);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
