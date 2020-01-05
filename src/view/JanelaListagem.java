@@ -6,13 +6,10 @@
 package view;
 
 import controller.EmprestimoController;
-import java.util.ArrayList;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import model.EmprestimoTableModel;
-import model.bean.Emprestimo;
-import model.dao.EmprestimoDAO;
 
 /**
  *
@@ -23,7 +20,7 @@ public class JanelaListagem extends javax.swing.JFrame {
     /**
      * Creates new form JanelaListagem
      */
-    private EmprestimoController controller;
+    private final EmprestimoController controller;
     private final EmprestimoTableModel emprestimoTabelModel = new EmprestimoTableModel();
     
     public JanelaListagem() {
@@ -58,7 +55,7 @@ public class JanelaListagem extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de emprestimos");
-        setMinimumSize(new java.awt.Dimension(800, 300));
+        setMinimumSize(new java.awt.Dimension(800, 400));
         setName("frmPrincipal"); // NOI18N
         setSize(new java.awt.Dimension(700, 350));
 
@@ -296,8 +293,7 @@ public class JanelaListagem extends javax.swing.JFrame {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
         if (this.tbEmprestimos.getSelectedRow() != -1){
-            DialogEmprestimoAlterar  emprestimoAlterar = new DialogEmprestimoAlterar(this, true, emprestimoTabelModel, this.tbEmprestimos.getSelectedRow());
-            emprestimoAlterar.setVisible(true);
+            new DialogEmprestimoAlterar(this, true, controller, emprestimoTabelModel, this.tbEmprestimos.getSelectedRow()).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null,"Selecione um emprestimo");
         }
@@ -333,7 +329,7 @@ public class JanelaListagem extends javax.swing.JFrame {
     private void tbEmprestimosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbEmprestimosMouseClicked
         // TODO add your handling code here:
         if(evt.getClickCount()==2 && this.tbEmprestimos.getSelectedRow() != -1){
-            new DialogEmprestimoAlterar(this, true, emprestimoTabelModel, this.tbEmprestimos.getSelectedRow()).setVisible(true);
+            new DialogEmprestimoAlterar(this, true, controller, emprestimoTabelModel, this.tbEmprestimos.getSelectedRow()).setVisible(true);
         }
         
     }//GEN-LAST:event_tbEmprestimosMouseClicked

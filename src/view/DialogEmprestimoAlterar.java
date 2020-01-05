@@ -5,10 +5,10 @@
  */
 package view;
 
+import controller.EmprestimoController;
 import javax.swing.JOptionPane;
-import model.bean.Emprestimo;
 import model.EmprestimoTableModel;
-import model.dao.EmprestimoDAO;
+
 
 /**
  *
@@ -16,25 +16,31 @@ import model.dao.EmprestimoDAO;
  */
 public class DialogEmprestimoAlterar extends javax.swing.JDialog {
 
-    private final EmprestimoTableModel emprestimoTableModel;
-    private final int row;
+    private final int id;
+    private final EmprestimoController controller;
 
     /**
      * Creates new form DialogEmprestimoAlterar
+     * @param parent
+     * @param modal
+     * @param controller
+     * @param emprestimoTableModel
+     * @param row
      */
-    public DialogEmprestimoAlterar(java.awt.Frame parent, boolean modal,  EmprestimoTableModel emprestimoTableModel, int row) {
-        super(parent, modal);
-        this.row = row;
-        this.emprestimoTableModel = emprestimoTableModel;
+    public DialogEmprestimoAlterar(java.awt.Frame parent, boolean modal, EmprestimoController controller,  EmprestimoTableModel emprestimoTableModel, int row) {
+        super(parent, modal); 
         initComponents();
         
-        this.txtItem.setText(this.emprestimoTableModel.getValueAt(row, 1).toString());
-        this.txtNome.setText(this.emprestimoTableModel.getValueAt(row, 2).toString());
-        this.txtContato.setText(this.emprestimoTableModel.getValueAt(row, 3).toString());
-        this.txtDtEmprestimo.setText(this.emprestimoTableModel.getValueAt(row, 4).toString());
-        this.txtDtDevolucao.setText(this.emprestimoTableModel.getValueAt(row, 5).toString());
-        if(this.emprestimoTableModel.getValueAt(row, 6)!= null){
-            this.txtDtDevolvido.setText(this.emprestimoTableModel.getValueAt(row, 6).toString());
+        this.controller = controller;
+        this.id = Integer.parseInt(emprestimoTableModel.getValueAt(row, 0).toString());
+        
+        this.txtItem.setText(emprestimoTableModel.getValueAt(row, 1).toString());
+        this.txtNome.setText(emprestimoTableModel.getValueAt(row, 2).toString());
+        this.txtContato.setText(emprestimoTableModel.getValueAt(row, 3).toString());
+        this.txtDtEmprestimo.setText(emprestimoTableModel.getValueAt(row, 4).toString());
+        this.txtDtDevolucao.setText(emprestimoTableModel.getValueAt(row, 5).toString());
+        if(emprestimoTableModel.getValueAt(row, 6)!= null){
+            this.txtDtDevolvido.setText(emprestimoTableModel.getValueAt(row, 6).toString());
         }      
     }
 
@@ -244,7 +250,6 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
-        int id = Integer.parseInt(this.emprestimoTableModel.getValueAt(this.row, 0).toString());
         String item = this.txtItem.getText();
         String nome = this.txtNome.getText();
         String contato = this.txtContato.getText();
@@ -255,26 +260,9 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null,"Preencha todos os campos!");
             return;
         }
-        //Emprestimo
-        Emprestimo emprestimo = new Emprestimo();
-        emprestimo.setId(id);
-        emprestimo.setItem(item);
-        emprestimo.setAmigoNome(nome);
-        emprestimo.setAmigoContato(contato);
-        emprestimo.setDataEmprestimo(dataEmprestimo);
-        emprestimo.setDataDevolucao(dataDevolucao);
-        emprestimo.setDataDevolvido(dataDevolvido);
-        EmprestimoDAO dao = new EmprestimoDAO();
-        if(dao.update(emprestimo)){
-            //table
-            this.emprestimoTableModel.setValueAt(id, row,0);
-            this.emprestimoTableModel.setValueAt(item, row, 1);
-            this.emprestimoTableModel.setValueAt(nome, row, 2);
-            this.emprestimoTableModel.setValueAt(contato, row, 3);
-            this.emprestimoTableModel.setValueAt(dataEmprestimo, row, 4);
-            this.emprestimoTableModel.setValueAt(dataDevolucao, row, 5);   
-            this.emprestimoTableModel.setValueAt(dataDevolvido, row, 6);
-            
+        if(this.controller.update(this.id, nome, contato, item, dataEmprestimo, dataDevolucao, dataDevolvido)){
+            this.controller.updateTable();
+            JOptionPane.showMessageDialog(null,"Dados atualizados com sucesso!");
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Não foi possivel alterar", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -282,10 +270,10 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     
-    public boolean camposPreenchidos(String nome, String contato, String item, String dataEmprestimo, String dataDevolução){
-        //System.err.println("> "+nome+", "+contato+", "+item+", "+dataEmprestimo+", "+dataDevolução);
+    public boolean camposPreenchidos(String nome, String contato, String item, String dataEmprestimo, String dataDevolucao){
+        //System.err.println("> "+nome+", "+contato+", "+item+", "+dataEmprestimo+", "+dataDevolucao);
         boolean[] campos = {nome.equals(""), contato.equals("(  )     -    "), item.equals(""),
-                            dataEmprestimo.equals("  /  /    "),dataDevolução.equals("  /  /    ")
+                            dataEmprestimo.equals("  /  /    "),dataDevolucao.equals("  /  /    ")
         };
         for( boolean vazio: campos) {
             if(vazio){
@@ -339,7 +327,7 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DialogEmprestimoAlterar dialog = new DialogEmprestimoAlterar(new javax.swing.JFrame(), true, new EmprestimoTableModel(),-1);
+                DialogEmprestimoAlterar dialog = new DialogEmprestimoAlterar(new javax.swing.JFrame(),true, new EmprestimoController(null) , new EmprestimoTableModel(),-1);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

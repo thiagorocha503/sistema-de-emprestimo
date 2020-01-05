@@ -16,7 +16,7 @@ import model.dao.EmprestimoDAO;
  */
 public class EmprestimoController {
     
-    private EmprestimoTableModel emprestimoTabelModel;
+    private final EmprestimoTableModel emprestimoTabelModel;
     
     public EmprestimoController( EmprestimoTableModel emprestimoTabelModel) {
         this.emprestimoTabelModel = emprestimoTabelModel;
@@ -70,6 +70,23 @@ public class EmprestimoController {
         emprestimo.setDataDevolucao(dataDevolucao);
         EmprestimoDAO dao = new EmprestimoDAO();
         if (dao.insert(emprestimo)){
+            this.updateTable();
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public boolean update(int id, String nome, String contato, String item, String dataEmprestimo, String dataDevolucao, String datadevolvido){
+        Emprestimo emprestimo = new Emprestimo();
+        emprestimo.setId(id);
+        emprestimo.setItem(item);
+        emprestimo.setAmigoNome(nome);
+        emprestimo.setAmigoContato(contato);
+        emprestimo.setDataEmprestimo(dataEmprestimo);
+        emprestimo.setDataDevolucao(dataDevolucao);
+        EmprestimoDAO dao = new EmprestimoDAO();
+        if (dao.update(emprestimo)){
             this.updateTable();
             return true;
         } else {
