@@ -6,11 +6,9 @@
 package view;
 
 import controller.EmprestimoController;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import model.bean.Emprestimo;
 import model.EmprestimoTableModel;
-import model.dao.EmprestimoDAO;
+
 
 /**
  *

@@ -7,7 +7,6 @@ package view;
 
 import controller.EmprestimoController;
 import javax.swing.JOptionPane;
-import model.EmprestimoTableModel;
 
 /**
  *
