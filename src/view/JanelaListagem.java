@@ -275,7 +275,8 @@ public class JanelaListagem extends javax.swing.JFrame {
         // TODO add your handling code here:
         int row = this.tbEmprestimos.getSelectedRow();
         if(row == -1){
-            JOptionPane.showMessageDialog(null,"Escolha um emprestimo");    
+            JOptionPane.showMessageDialog(null,"Escolha um emprestimo");
+            return;
         }
         int resposta = JOptionPane.showConfirmDialog(null, "Tem certeza de deseja remover item selecionado?","Remoção",JOptionPane.YES_NO_OPTION);
         System.out.println(resposta);
