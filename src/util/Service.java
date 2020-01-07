@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class DateConversion {
+public class Service {
     
     /**
      * Retorna objeto calendar
@@ -37,10 +37,10 @@ public class DateConversion {
             DateFormat dateFormt = new SimpleDateFormat("yyyy-MM-dd");
             // bloqueiar correção de data
             dateFormt.setLenient (false);
-            dateFormt.parse (date); 
-            int year = Integer.parseInt(date.substring(0,3));
-            int month = Integer.parseInt(date.substring(5,6));
-            int day = Integer.parseInt(date.substring(8,9));
+            dateFormt.parse(date); 
+            int year = Integer.parseInt(date.substring(0,4));
+            int month = Integer.parseInt(date.substring(5,7));
+            int day = Integer.parseInt(date.substring(8,10));
                      
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.DAY_OF_MONTH, day);
