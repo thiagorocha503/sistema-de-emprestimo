@@ -5,6 +5,8 @@
  */
 package model.bean;
 
+import java.util.Calendar;
+
 
 /**
  *
@@ -13,9 +15,9 @@ package model.bean;
 public class Emprestimo {
     private int id;
     private String item;
-    private String dataEmprestimo;
-    private String dataDevolucao;
-    private String dataDevolvido;
+    private Calendar dataEmprestimo;
+    private Calendar dataDevolucao;
+    private Calendar dataDevolvido;
     private String amigoContato;
     private String amigoNome;
 
@@ -39,29 +41,31 @@ public class Emprestimo {
         this.item = item;
     }
 
-    public String getDataEmprestimo() {
+    public Calendar getDataEmprestimo() {
         return dataEmprestimo;
     }
 
-    public void setDataEmprestimo(String dataEmprestimo) {
+    public void setDataEmprestimo(Calendar dataEmprestimo) {
         this.dataEmprestimo = dataEmprestimo;
     }
 
-    public String getDataDevolucao() {
+    public Calendar getDataDevolucao() {
         return dataDevolucao;
     }
 
-    public void setDataDevolucao(String dataDevolucao) {
+    public void setDataDevolucao(Calendar dataDevolucao) {
         this.dataDevolucao = dataDevolucao;
     }
 
-    public String getDataDevolvido() {
+    public Calendar getDataDevolvido() {
         return dataDevolvido;
     }
 
-    public void setDataDevolvido(String dataDevolvido) {
+    public void setDataDevolvido(Calendar dataDevolvido) {
         this.dataDevolvido = dataDevolvido;
     }
+
+    
 
     public String getAmigoContato() {
         return amigoContato;
