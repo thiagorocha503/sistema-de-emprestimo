@@ -133,7 +133,15 @@ public class EmprestimoTableModel  extends AbstractTableModel{
         } else {
             month = String.valueOf(c.get(Calendar.MONTH)+1);
         }
-        year = String.valueOf(c.get(Calendar.YEAR));
+        if (c.get(Calendar.YEAR)> 0 && c.get(Calendar.YEAR)<10){
+            year = "000"+String.valueOf(c.get(Calendar.YEAR));
+        } else if (c.get(Calendar.YEAR)>= 10 && c.get(Calendar.YEAR)<100){
+            year = "00"+String.valueOf(c.get(Calendar.YEAR));
+        } else if(c.get(Calendar.YEAR)>= 100 && c.get(Calendar.YEAR)<1000){
+            year = "0"+String.valueOf(c.get(Calendar.YEAR));
+        }else {
+            year = String.valueOf(c.get(Calendar.YEAR));
+        }
         return day+"/"+month+"/"+year;
     }
 }
