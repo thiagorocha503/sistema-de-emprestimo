@@ -233,8 +233,6 @@ public class DialogEmprestimoCadastro extends javax.swing.JDialog {
         if(this.controller.insert( nome, contato, item, dateFormatToSqlDate(dataEmprestimo),  dateFormatToSqlDate(dataDevolucao))){
             this.cleanField();
             JOptionPane.showMessageDialog(null, "Dados salvo com sucesso!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Erro ao salvar dados", "Erro", JOptionPane.ERROR_MESSAGE);
         }
        
 

@@ -77,11 +77,10 @@ public class EmprestimoController {
             emprestimo.setDataEmprestimo(Service.sqlDateToCalendar(dataEmprestimo));
             emprestimo.setDataDevolucao(Service.sqlDateToCalendar(dataDevolucao));
         } catch (DateConversionException ex) {
-            JOptionPane.showMessageDialog(null,"Erro: "+ex);
+            JOptionPane.showMessageDialog(null,"Data inválida: ");
             Logger.getLogger(EmprestimoController.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-        }
-        
+        }       
         EmprestimoDAO dao = new EmprestimoDAO();
         if (dao.insert(emprestimo)){
             this.updateTable();
@@ -100,9 +99,11 @@ public class EmprestimoController {
         try {
             emprestimo.setDataEmprestimo(Service.sqlDateToCalendar(dataEmprestimo));
             emprestimo.setDataDevolucao(Service.sqlDateToCalendar(dataDevolucao));
+            if(!datadevolvido.equals("")){
+                emprestimo.setDataDevolvido(Service.sqlDateToCalendar(datadevolvido));
+            }
         } catch (DateConversionException ex) {
-            JOptionPane.showMessageDialog(null,"Erro: "+ex);
-            Logger.getLogger(EmprestimoController.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null,"Data inválida!");
             return false;
         }
         
@@ -138,7 +139,7 @@ public class EmprestimoController {
             }
         } catch (DateConversionException ex) {
             //Logger.getLogger(EmprestimoController.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null,"Erro: "+ex);
+            JOptionPane.showMessageDialog(null,"Data inválida!");
             return false;
         }
         

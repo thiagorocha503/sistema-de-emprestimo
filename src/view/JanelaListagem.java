@@ -28,7 +28,13 @@ public class JanelaListagem extends javax.swing.JFrame {
         initComponents();
         this.controller = new EmprestimoController(emprestimoTabelModel);
         this.tbEmprestimos.setModel(this.emprestimoTabelModel);
-        this.findAll();
+        try{
+           this.findAll(); 
+        } catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Erro: "+ex);
+            this.dispose();
+        }
+        
     }
 
     /**

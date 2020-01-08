@@ -122,11 +122,8 @@ public class DialogDevolucao extends javax.swing.JDialog {
             if(this.controller.devolver(id, dateFormatToSqlDate(this.txtData.getText()))){            
                 this.controller.updateTable();
                 this.dispose();
-                JOptionPane.showMessageDialog(null,"Item devolvido com sucesso");
-                
-            } else {
-                JOptionPane.showMessageDialog(null, "Não foi possivel devolver item");
-            }       
+                JOptionPane.showMessageDialog(null,"Item devolvido com sucesso"); 
+            }
         } else{
             JOptionPane.showMessageDialog(null, "Preencha o campo de devolução");
         }
