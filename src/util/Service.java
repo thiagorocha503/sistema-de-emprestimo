@@ -26,7 +26,16 @@ public class Service {
         } else {
             month = String.valueOf(calendar.get(Calendar.MONTH)+1);
         }
-        year = String.valueOf(calendar.get(Calendar.YEAR));
+        if (calendar.get(Calendar.YEAR)> 0 && calendar.get(Calendar.YEAR)<10){
+            year = "000"+String.valueOf(calendar.get(Calendar.YEAR));
+        } else if (calendar.get(Calendar.YEAR)> 10 && calendar.get(Calendar.YEAR)<100){
+            year = "00"+String.valueOf(calendar.get(Calendar.YEAR));
+        } if (calendar.get(Calendar.YEAR)> 100 && calendar.get(Calendar.YEAR)<1000){
+            year = "0"+String.valueOf(calendar.get(Calendar.YEAR));
+        }else {
+            year = String.valueOf(calendar.get(Calendar.YEAR));
+        }
+        
         return year+"-"+month+"-"+day;
 
     }

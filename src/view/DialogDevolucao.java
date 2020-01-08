@@ -119,7 +119,7 @@ public class DialogDevolucao extends javax.swing.JDialog {
     private void btnDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverActionPerformed
         // TODO add your handling code here:
         if (this.txtData.getText().length() != 0 && !this.txtData.getText().equals("  /  /    ") ){
-            if(this.controller.devolver(id, this.txtData.getText() )){            
+            if(this.controller.devolver(id, dateFormatToSqlDate(this.txtData.getText()))){            
                 this.controller.updateTable();
                 this.dispose();
                 JOptionPane.showMessageDialog(null,"Item devolvido com sucesso");
@@ -136,7 +136,14 @@ public class DialogDevolucao extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
-
+    
+     private String dateFormatToSqlDate(String d){
+        String day = d.substring(0,2);
+        String month = d.substring(3,5);
+        String year = d.substring(6,10);
+        return year+"-"+month+"-"+day;
+    }
+     
     /**
      * @param args the command line arguments
      */

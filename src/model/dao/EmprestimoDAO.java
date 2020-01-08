@@ -76,6 +76,50 @@ public class EmprestimoDAO {
         
     }
     
+    public Emprestimo getEmprestimo(int id){
+        final String sql = "SELECT * FROM emprestimo WHERE id=?";
+        if (this.conn == null){
+            JOptionPane.showMessageDialog(null, "Não foi possivel se conectar ao banco de dados", "erro", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        PreparedStatement stmt=null;
+        ResultSet rows=null;
+        try {         
+            stmt = this.conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+            rows = stmt.executeQuery();
+            if(rows.next()) {
+                Emprestimo emprestimo = new Emprestimo();
+                emprestimo.setId(rows.getInt("id"));
+                emprestimo.setItem(rows.getString("item_nome"));
+                emprestimo.setAmigoNome(rows.getString("pessoa_nome"));
+                emprestimo.setAmigoContato(rows.getString("pessoa_contato"));
+                try {
+                    emprestimo.setDataEmprestimo(Service.sqlDateToCalendar(rows.getString("dtEmprestimo")));
+                    emprestimo.setDataDevolucao(Service.sqlDateToCalendar(rows.getString("dtDevolucao")));
+                    System.err.println("<<< "+rows.getString("dtDevolvido")+" >>>");
+                    if(rows.getString("dtDevolvido") != null){
+                        if (!rows.getString("dtDevolvido").equals("")){
+                            emprestimo.setDataDevolvido(Service.sqlDateToCalendar(rows.getString("dtDevolvido")));                      }
+                      
+                    }                
+                } catch (DateConversionException ex) {
+                    Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null,"Erro: "+ex);
+                }
+               
+                return emprestimo;               
+            } else{
+                return null;
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error: "+ex, "erro", JOptionPane.ERROR_MESSAGE);
+            return null;
+        } finally{
+            ConnectionFatory.closeConnection(conn, stmt);
+        }
+    }
+    
     public boolean insert(Emprestimo emprestimo) {
         final String sql = "INSERT INTO emprestimo(item_nome, pessoa_nome, pessoa_contato, dtEmprestimo, dtDevolucao) VALUES(?, ?, ?, ?, ?)";
         if (this.conn == null){

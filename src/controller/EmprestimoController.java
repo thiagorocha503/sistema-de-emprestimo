@@ -122,7 +122,25 @@ public class EmprestimoController {
     }
     
     public boolean devolver(int id, String data){
-        EmprestimoDAO dao = new EmprestimoDAO();
-        return dao.devolver(id, data);
+        try {
+            EmprestimoDAO dao = new EmprestimoDAO();
+            Emprestimo emprestimo = dao.getEmprestimo(id);
+            emprestimo.setDataDevolvido(Service.sqlDateToCalendar(data));
+            if(emprestimo != null){
+                if(new EmprestimoDAO().update(emprestimo)){
+                    return true;
+                } else {
+                    return false;
+                }
+            } else{
+                JOptionPane.showMessageDialog(null, "Emprestimo não encontrado");
+                return false;
+            }
+        } catch (DateConversionException ex) {
+            //Logger.getLogger(EmprestimoController.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null,"Erro: "+ex);
+            return false;
+        }
+        
     }
 }
