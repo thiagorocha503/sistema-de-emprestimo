@@ -261,8 +261,12 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
             return;
         }
         dataEmprestimo = dateFormatToSqlDate(dataEmprestimo);
-        dataDevolucao = dateFormatToSqlDate(dataDevolucao);
-        dataDevolvido = dateFormatToSqlDate(dataDevolvido);
+        dataDevolucao = dateFormatToSqlDate(dataDevolucao);     
+        if(dataDevolvido.equals("  /  /    ")){
+            dataDevolvido = "";
+        } else {
+            dataDevolvido = dateFormatToSqlDate(dataDevolvido);
+        }
         if(this.controller.update(this.id, nome, contato, item, dataEmprestimo, dataDevolucao, dataDevolvido)){
             this.controller.updateTable();
             JOptionPane.showMessageDialog(null,"Dados atualizados com sucesso!");
@@ -299,6 +303,7 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
         this.txtItem.setText("");
         this.txtDtEmprestimo.setText("");
         this.txtDtDevolucao.setText("");
+        this.txtDtDevolvido.setText("");
         
     }
     

@@ -103,7 +103,7 @@ public class EmprestimoController {
                 emprestimo.setDataDevolvido(Service.sqlDateToCalendar(datadevolvido));
             }
         } catch (DateConversionException ex) {
-            JOptionPane.showMessageDialog(null,"Data inválida!");
+            JOptionPane.showMessageDialog(null,"Data inválida!: "+ex);
             return false;
         }
         
