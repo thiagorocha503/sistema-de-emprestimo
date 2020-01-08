@@ -6,9 +6,14 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import model.EmprestimoTableModel;
 import model.bean.Emprestimo;
 import model.dao.EmprestimoDAO;
+import util.DateConversionException;
+import util.Service;
 
 /**
  *
@@ -68,8 +73,15 @@ public class EmprestimoController {
         emprestimo.setItem(item);
         emprestimo.setAmigoNome(nome);
         emprestimo.setAmigoContato(contato);
-        emprestimo.setDataEmprestimo(dataEmprestimo);
-        emprestimo.setDataDevolucao(dataDevolucao);
+        try {
+            emprestimo.setDataEmprestimo(Service.sqlDateToCalendar(dataEmprestimo));
+            emprestimo.setDataDevolucao(Service.sqlDateToCalendar(dataDevolucao));
+        } catch (DateConversionException ex) {
+            JOptionPane.showMessageDialog(null,"Erro: "+ex);
+            Logger.getLogger(EmprestimoController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
         EmprestimoDAO dao = new EmprestimoDAO();
         if (dao.insert(emprestimo)){
             this.updateTable();
@@ -85,8 +97,15 @@ public class EmprestimoController {
         emprestimo.setItem(item);
         emprestimo.setAmigoNome(nome);
         emprestimo.setAmigoContato(contato);
-        emprestimo.setDataEmprestimo(dataEmprestimo);
-        emprestimo.setDataDevolucao(dataDevolucao);
+        try {
+            emprestimo.setDataEmprestimo(Service.sqlDateToCalendar(dataEmprestimo));
+            emprestimo.setDataDevolucao(Service.sqlDateToCalendar(dataDevolucao));
+        } catch (DateConversionException ex) {
+            JOptionPane.showMessageDialog(null,"Erro: "+ex);
+            Logger.getLogger(EmprestimoController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
         EmprestimoDAO dao = new EmprestimoDAO();
         if (dao.update(emprestimo)){
             this.updateTable();

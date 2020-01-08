@@ -48,7 +48,7 @@ public class Service {
             calendar.set(Calendar.YEAR, year);
             return calendar;
         } catch( ParseException | ArrayIndexOutOfBoundsException ex){
-            throw  new DateConversionException("Data inválida");
+            throw  new DateConversionException("Data inválida ["+date+"]: "+ex);
         }
         
     }

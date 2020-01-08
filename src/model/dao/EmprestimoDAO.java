@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package model.dao;
+import util.Service;
 
 import connection.ConnectionFatory;
 import java.sql.Connection;
@@ -15,11 +16,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.bean.Emprestimo;
+import util.DateConversionException;
 
 /**
  *
  * @author thiago
  */
+
 public class EmprestimoDAO {
     
     private final Connection conn;
@@ -46,9 +49,18 @@ public class EmprestimoDAO {
                 emprestimo.setItem(rows.getString("item_nome"));
                 emprestimo.setAmigoNome(rows.getString("pessoa_nome"));
                 emprestimo.setAmigoContato(rows.getString("pessoa_contato"));
-                emprestimo.setDataEmprestimo(rows.getString("dtEmprestimo"));
-                emprestimo.setDataDevolucao(rows.getString("dtDevolucao"));
-                emprestimo.setDataDevolvido(rows.getString("dtDevolvido"));
+                try {
+                    emprestimo.setDataEmprestimo(Service.sqlDateToCalendar(rows.getString("dtEmprestimo")));
+                    emprestimo.setDataDevolucao(Service.sqlDateToCalendar(rows.getString("dtDevolucao")));
+                    System.err.println(">> "+rows.getString("dtDevolvido"));
+                    if(rows.getString("dtDevolvido") == null){
+                      emprestimo.setDataDevolvido(Service.sqlDateToCalendar(rows.getString("dtDevolvido")));  
+                    }                 
+                } catch (DateConversionException ex) {
+                    Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null,"Erro: "+ex);
+                }
+               
                 emprestimos.add(emprestimo);               
             }
             return emprestimos;
@@ -74,8 +86,8 @@ public class EmprestimoDAO {
             stmt.setString(1, emprestimo.getItem());
             stmt.setString(2, emprestimo.getAmigoNome());
             stmt.setString(3, emprestimo.getAmigoContato());
-            stmt.setString(4, emprestimo.getDataEmprestimo());
-            stmt.setString(5, emprestimo.getDataDevolucao());
+            stmt.setString(4, Service.calendarToDateSQL(emprestimo.getDataEmprestimo()));
+            stmt.setString(5, Service.calendarToDateSQL(emprestimo.getDataDevolucao()));
             stmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -119,9 +131,13 @@ public class EmprestimoDAO {
             stmt.setString(1, emprestimo.getItem());
             stmt.setString(2, emprestimo.getAmigoNome());
             stmt.setString(3, emprestimo.getAmigoContato());
-            stmt.setString(4, emprestimo.getDataEmprestimo());
-            stmt.setString(5, emprestimo.getDataDevolucao());
-            stmt.setString(6, emprestimo.getDataDevolvido());
+            stmt.setString(4, Service.calendarToDateSQL(emprestimo.getDataEmprestimo()));
+            stmt.setString(5, Service.calendarToDateSQL(emprestimo.getDataDevolucao()));
+            if(emprestimo.getDataDevolvido() == null){
+                stmt.setString(6, "");
+            }else{
+                stmt.setString(6, Service.calendarToDateSQL(emprestimo.getDataDevolvido()));
+            }
             stmt.setInt(7, emprestimo.getId());
             stmt.executeUpdate();
             return true;
@@ -152,9 +168,15 @@ public class EmprestimoDAO {
                 emprestimo.setItem(rows.getString("item_nome"));
                 emprestimo.setAmigoNome(rows.getString("pessoa_nome"));
                 emprestimo.setAmigoContato(rows.getString("pessoa_contato"));
-                emprestimo.setDataEmprestimo(rows.getString("dtEmprestimo"));
-                emprestimo.setDataDevolucao(rows.getString("dtDevolucao"));
-                emprestimo.setDataDevolvido(rows.getString("dtDevolvido"));
+                try {
+                    emprestimo.setDataEmprestimo(Service.sqlDateToCalendar(rows.getString("dtEmprestimo")));
+                    emprestimo.setDataDevolucao(Service.sqlDateToCalendar(rows.getString("dtDevolucao")));
+                    emprestimo.setDataDevolvido(Service.sqlDateToCalendar(rows.getString("dtDevolvido")));
+                } catch (DateConversionException ex) {
+                    Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null,"Erro: "+ex);
+                }
+                
                 emprestimos.add(emprestimo);               
             }
             return emprestimos;
@@ -172,7 +194,7 @@ public class EmprestimoDAO {
     public boolean devolver(int id, String data){
         final String sql = "UPDATE emprestimo  SET dtDevolvido=? WHERE id=?";
         if (this.conn == null){
-            JOptionPane.showMessageDialog(null, "erro", "erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "erro", "Não foi possivel conectar com o banco de ", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         PreparedStatement stmt=null;

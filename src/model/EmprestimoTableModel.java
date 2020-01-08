@@ -7,6 +7,7 @@ package model;
 
 import model.bean.Emprestimo;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -62,6 +63,8 @@ public class EmprestimoTableModel  extends AbstractTableModel{
     
     @Override
     public Object getValueAt(int row, int column) {
+        Calendar data;
+        String day, month, year;
         switch(column) {
             case 0:
                 return this.rows.get(row).getId();
@@ -72,11 +75,14 @@ public class EmprestimoTableModel  extends AbstractTableModel{
             case 3:
                 return this.rows.get(row).getAmigoContato();
             case 4:
-                return this.rows.get(row).getDataEmprestimo();
+                data = this.rows.get(row).getDataEmprestimo();
+                return calendarFormat(data);
             case 5:
-                return this.rows.get(row).getDataDevolucao();
+                data = this.rows.get(row).getDataDevolucao();
+                return calendarFormat(data);
             case 6:
-                return this.rows.get(row).getDataDevolvido();             
+                data = this.rows.get(row).getDataDevolvido();
+                return calendarFormat(data);
         }
         return null;
     }
@@ -96,17 +102,38 @@ public class EmprestimoTableModel  extends AbstractTableModel{
                 this.rows.get(row).setAmigoContato(o.toString());
                 break;
             case 4:
-                this.rows.get(row).setDataEmprestimo(o.toString());
+                this.rows.get(row).setDataEmprestimo((Calendar)o);
                 break;
             case 5:
-                this.rows.get(row).setDataDevolucao(o.toString());
+                this.rows.get(row).setDataDevolucao((Calendar)o);
                 break;
             case 6:
-                this.rows.get(row).setDataDevolvido(o.toString());
+                this.rows.get(row).setDataDevolvido((Calendar)o);
                 break;
             default:
                 throw new RuntimeException("Coluna inexistente");
         }
         this.fireTableRowsUpdated(row, row);
+    }
+    
+    public String calendarFormat(Calendar c){
+        if(c == null){
+            return "";
+        }
+        String day, month, year;
+        //Day
+        if (c.get(Calendar.DAY_OF_MONTH) < 10){
+            day= "0"+String.valueOf(c.get(Calendar.DAY_OF_MONTH));
+        } else {
+            day = String.valueOf(c.get(Calendar.DAY_OF_MONTH));
+        }
+        //Month
+        if (c.get(Calendar.MONTH)+1 < 10){// January = 0, Februray = 1 [...]
+            month = "0"+String.valueOf(c.get(Calendar.MONTH)+1);
+        } else {
+            month = String.valueOf(c.get(Calendar.MONTH)+1);
+        }
+        year = String.valueOf(c.get(Calendar.YEAR));
+        return day+"/"+month+"/"+year;
     }
 }

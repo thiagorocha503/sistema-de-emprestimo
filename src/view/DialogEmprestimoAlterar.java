@@ -260,6 +260,9 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null,"Preencha todos os campos!");
             return;
         }
+        dataEmprestimo = dateFormatToSqlDate(dataEmprestimo);
+        dataDevolucao = dateFormatToSqlDate(dataDevolucao);
+        dataDevolvido = dateFormatToSqlDate(dataDevolvido);
         if(this.controller.update(this.id, nome, contato, item, dataEmprestimo, dataDevolucao, dataDevolvido)){
             this.controller.updateTable();
             JOptionPane.showMessageDialog(null,"Dados atualizados com sucesso!");
@@ -281,6 +284,13 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
             }
         }
         return true;
+    }
+    
+    private String dateFormatToSqlDate(String d){
+        String day = d.substring(0,2);
+        String month = d.substring(3,5);
+        String year = d.substring(6,10);
+        return year+"-"+month+"-"+day;
     }
     
     public void cleanField(){

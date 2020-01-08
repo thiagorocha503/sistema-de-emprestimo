@@ -230,7 +230,7 @@ public class DialogEmprestimoCadastro extends javax.swing.JDialog {
             return;
         }
         
-        if(this.controller.insert( nome, contato, item, dataEmprestimo,  dataDevolucao)){
+        if(this.controller.insert( nome, contato, item, dateFormatToSqlDate(dataEmprestimo),  dateFormatToSqlDate(dataDevolucao))){
             this.cleanField();
             JOptionPane.showMessageDialog(null, "Dados salvo com sucesso!");
         } else {
@@ -240,7 +240,13 @@ public class DialogEmprestimoCadastro extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnEmprestarActionPerformed
 
-
+    private String dateFormatToSqlDate(String d){
+        String day = d.substring(0,2);
+        String month = d.substring(3,5);
+        String year = d.substring(6,10);
+        return year+"-"+month+"-"+day;
+    }
+    
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         this.dispose();
