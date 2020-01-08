@@ -52,10 +52,12 @@ public class EmprestimoDAO {
                 try {
                     emprestimo.setDataEmprestimo(Service.sqlDateToCalendar(rows.getString("dtEmprestimo")));
                     emprestimo.setDataDevolucao(Service.sqlDateToCalendar(rows.getString("dtDevolucao")));
-                    System.err.println(">> "+rows.getString("dtDevolvido"));
-                    if(rows.getString("dtDevolvido") == null){
-                      emprestimo.setDataDevolvido(Service.sqlDateToCalendar(rows.getString("dtDevolvido")));  
-                    }                 
+                    System.err.println("<<< "+rows.getString("dtDevolvido")+" >>>");
+                    if(rows.getString("dtDevolvido") != null){
+                        if (!rows.getString("dtDevolvido").equals("")){
+                            emprestimo.setDataDevolvido(Service.sqlDateToCalendar(rows.getString("dtDevolvido")));                      }
+                      
+                    }                
                 } catch (DateConversionException ex) {
                     Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(null,"Erro: "+ex);
@@ -171,7 +173,11 @@ public class EmprestimoDAO {
                 try {
                     emprestimo.setDataEmprestimo(Service.sqlDateToCalendar(rows.getString("dtEmprestimo")));
                     emprestimo.setDataDevolucao(Service.sqlDateToCalendar(rows.getString("dtDevolucao")));
-                    emprestimo.setDataDevolvido(Service.sqlDateToCalendar(rows.getString("dtDevolvido")));
+                    if(rows.getString("dtDevolvido") != null){
+                        if (!rows.getString("dtDevolvido").equals("")){
+                            emprestimo.setDataDevolvido(Service.sqlDateToCalendar(rows.getString("dtDevolvido")));                      }
+                      
+                    } 
                 } catch (DateConversionException ex) {
                     Logger.getLogger(EmprestimoDAO.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(null,"Erro: "+ex);
