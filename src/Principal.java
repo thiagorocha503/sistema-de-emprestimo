@@ -1,4 +1,5 @@
 
+import java.io.File;
 import view.JanelaListagem;
 
 /*
@@ -13,7 +14,17 @@ import view.JanelaListagem;
  */
 public class Principal {
     
+    public static void verificacao(){
+        String path = new File("").getAbsolutePath()+"\\data";
+        File data = new File(path);
+        if(!data.exists()){
+            data.mkdirs();
+        } 
+    }
+    
+    
     public static void main(String[] arg){
+            verificacao();
             System.err.println("jdbc:sqlite" + System.getProperty("user.dir")+"src/data/dataBase.sqlite");
             try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
