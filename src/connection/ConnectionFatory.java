@@ -17,12 +17,19 @@ import javax.swing.JOptionPane;
 public class ConnectionFatory {
     
     private static final String ROOT = new File("").getAbsolutePath();
-    private static final String PATH ="jdbc:sqlite:" + ROOT + "\\data\\dataBase.db";
+    private static final String PATH = ROOT + "\\data\\dataBase.db";
+    private static final String PATH_SQL ="jdbc:sqlite:" + PATH;
+
+    public static String getPATH() {
+        return PATH;
+    }
+    
+    
     
     public static Connection  getConnection(){
         try {
             Class.forName("org.sqlite.JDBC");
-            Connection conn = DriverManager.getConnection(ConnectionFatory.PATH);
+            Connection conn = DriverManager.getConnection(ConnectionFatory.PATH_SQL);
             initilazeDataBase(conn);
             //System.out.println("Coneção realizada com sucesso!");
             return conn;
