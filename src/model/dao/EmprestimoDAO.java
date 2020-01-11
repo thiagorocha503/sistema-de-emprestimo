@@ -180,7 +180,7 @@ public class EmprestimoDAO {
             stmt.setString(4, Service.calendarToDateSQL(emprestimo.getDataEmprestimo()));
             stmt.setString(5, Service.calendarToDateSQL(emprestimo.getDataDevolucao()));
             if(emprestimo.getDataDevolvido() == null){
-                stmt.setString(6, "");
+                stmt.setNull(6, 6);
             }else{
                 stmt.setString(6, Service.calendarToDateSQL(emprestimo.getDataDevolvido()));
             }
