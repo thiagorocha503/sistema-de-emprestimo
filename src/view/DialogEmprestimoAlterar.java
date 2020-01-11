@@ -271,8 +271,6 @@ public class DialogEmprestimoAlterar extends javax.swing.JDialog {
             this.controller.updateTable();
             JOptionPane.showMessageDialog(null,"Dados atualizados com sucesso!");
             this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Não foi possivel alterar", "Erro", JOptionPane.ERROR_MESSAGE);
         }    
     }//GEN-LAST:event_btnAlterarActionPerformed
 

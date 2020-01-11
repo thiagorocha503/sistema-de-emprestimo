@@ -52,7 +52,7 @@ public class EmprestimoDAO {
                 try {
                     emprestimo.setDataEmprestimo(Service.sqlDateToCalendar(rows.getString("dtEmprestimo")));
                     emprestimo.setDataDevolucao(Service.sqlDateToCalendar(rows.getString("dtDevolucao")));
-                    System.err.println("<<< "+rows.getString("dtDevolvido")+" >>>");
+                    //System.err.println("<<< "+rows.getString("dtDevolvido")+" >>>");
                     if(rows.getString("dtDevolvido") != null){
                         if (!rows.getString("dtDevolvido").equals("")){
                             emprestimo.setDataDevolvido(Service.sqlDateToCalendar(rows.getString("dtDevolvido")));                      }
@@ -97,7 +97,7 @@ public class EmprestimoDAO {
                 try {
                     emprestimo.setDataEmprestimo(Service.sqlDateToCalendar(rows.getString("dtEmprestimo")));
                     emprestimo.setDataDevolucao(Service.sqlDateToCalendar(rows.getString("dtDevolucao")));
-                    System.err.println("<<< "+rows.getString("dtDevolvido")+" >>>");
+                    //System.err.println("<<< "+rows.getString("dtDevolvido")+" >>>");
                     if(rows.getString("dtDevolvido") != null){
                         if (!rows.getString("dtDevolvido").equals("")){
                             emprestimo.setDataDevolvido(Service.sqlDateToCalendar(rows.getString("dtDevolvido")));                      }

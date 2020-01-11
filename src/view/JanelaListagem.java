@@ -285,7 +285,7 @@ public class JanelaListagem extends javax.swing.JFrame {
         Object data = this.emprestimoTabelModel.getValueAt(this.tbEmprestimos.getSelectedRow(), 6);
         if (! isDevolvido(data)){
             int id = Integer.parseInt(this.emprestimoTabelModel.getValueAt(this.tbEmprestimos.getSelectedRow() , 0).toString());
-            System.err.println(id);
+            //System.err.println(id);
             JDialog dialogEmprestimo = new DialogDevolucao(this, true, this.controller, id);
             dialogEmprestimo.setVisible(true);
         } else {
@@ -303,7 +303,7 @@ public class JanelaListagem extends javax.swing.JFrame {
             return;
         }
         int resposta = JOptionPane.showConfirmDialog(null, "Tem certeza de deseja remover item selecionado?","Remoção",JOptionPane.YES_NO_OPTION);
-        System.out.println(resposta);
+        //System.out.println(resposta);
         if (resposta==0){      
             int id = Integer.parseInt(this.emprestimoTabelModel.getValueAt(row, 0).toString());
             if (this.controller.remover(id)){

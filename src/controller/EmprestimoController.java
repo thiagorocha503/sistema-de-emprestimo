@@ -6,6 +6,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -74,8 +75,17 @@ public class EmprestimoController {
         emprestimo.setAmigoNome(nome);
         emprestimo.setAmigoContato(contato);
         try {
-            emprestimo.setDataEmprestimo(Service.sqlDateToCalendar(dataEmprestimo));
-            emprestimo.setDataDevolucao(Service.sqlDateToCalendar(dataDevolucao));
+            Calendar calendarEmprestimo;
+            Calendar calendarDevolucao;
+            calendarEmprestimo = Service.sqlDateToCalendar(dataEmprestimo);
+            calendarDevolucao = Service.sqlDateToCalendar(dataDevolucao);
+            if (calendarDevolucao.compareTo(calendarEmprestimo) < 0){
+                JOptionPane.showMessageDialog(null, "Data de devolução ante da data de empréstimo","Data inválida", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            emprestimo.setDataEmprestimo(calendarEmprestimo);
+            emprestimo.setDataDevolucao(calendarDevolucao);
+            
         } catch (DateConversionException ex) {
             JOptionPane.showMessageDialog(null,"Data inválida: ");
             Logger.getLogger(EmprestimoController.class.getName()).log(Level.SEVERE, null, ex);
@@ -96,11 +106,26 @@ public class EmprestimoController {
         emprestimo.setItem(item);
         emprestimo.setAmigoNome(nome);
         emprestimo.setAmigoContato(contato);
-        try {
-            emprestimo.setDataEmprestimo(Service.sqlDateToCalendar(dataEmprestimo));
-            emprestimo.setDataDevolucao(Service.sqlDateToCalendar(dataDevolucao));
+        try {    
+            Calendar calendarEmprestimo;
+            Calendar calendarDevolucao;
+            calendarEmprestimo = Service.sqlDateToCalendar(dataEmprestimo);
+            calendarDevolucao = Service.sqlDateToCalendar(dataDevolucao);
+            emprestimo.setDataEmprestimo(calendarEmprestimo);
+            emprestimo.setDataDevolucao(calendarDevolucao);
+            if(calendarDevolucao.compareTo(calendarEmprestimo) < 0){
+                JOptionPane.showMessageDialog(null, "Data de devolução ante da data de empréstimo","Data inválida", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            // data devolvido preenchido
             if(!datadevolvido.equals("")){
-                emprestimo.setDataDevolvido(Service.sqlDateToCalendar(datadevolvido));
+                Calendar calendarDevolvido = Service.sqlDateToCalendar(datadevolvido);
+                emprestimo.setDataDevolvido(calendarDevolvido);
+                if(calendarDevolvido.compareTo(calendarEmprestimo) < 0){
+                    JOptionPane.showMessageDialog(null, "Data devolvido ante da data de empréstimo","Data inválida", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                }
+                
             }
         } catch (DateConversionException ex) {
             JOptionPane.showMessageDialog(null,"Data inválida!: "+ex);
@@ -126,13 +151,17 @@ public class EmprestimoController {
         try {
             EmprestimoDAO dao = new EmprestimoDAO();
             Emprestimo emprestimo = dao.getEmprestimo(id);
-            emprestimo.setDataDevolvido(Service.sqlDateToCalendar(data));
+            Calendar calendarDevolvido = Service.sqlDateToCalendar(data);
+            emprestimo.setDataDevolvido(calendarDevolvido);
             if(emprestimo != null){
+                if(calendarDevolvido.compareTo(emprestimo.getDataEmprestimo()) < 0){
+                    JOptionPane.showMessageDialog(null, "Data de devolução ante da data de empréstimo","Data inválida", JOptionPane.ERROR_MESSAGE);
+                    return false; 
+                }
                 if(new EmprestimoDAO().update(emprestimo)){
                     return true;
-                } else {
-                    return false;
-                }
+                } else 
+                return false;
             } else{
                 JOptionPane.showMessageDialog(null, "Emprestimo não encontrado");
                 return false;
